@@ -9,7 +9,7 @@ namespace sandbox_databases
 {
     class DB
     {
-        MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=qwerty;database=holding_2");
+        MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=qwerty;database=oborot");
 
         public void openConnection()
         {

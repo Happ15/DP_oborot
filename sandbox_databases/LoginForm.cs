@@ -94,8 +94,8 @@ namespace sandbox_databases
 
             MySqlDataReader reader;
 
-            MySqlCommand command = new MySqlCommand("select * from `users` where Логин = @uL AND Пароль = @uP", db.getConnection());
-            MySqlCommand command_category = new MySqlCommand("select category from `users` where Логин = @uL", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from `vxod` where login = @uL AND password = @uP", db.getConnection());
+            MySqlCommand command_category = new MySqlCommand("select наименование_должности from sotrudnik join dolznost on DOLZNOST_id = dolznost.id join VXOD on SOTRUDNIK_id = SOTRUDNIK.id where login = @uL", db.getConnection());
 
             command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = loginUser;
             command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = passUser;
@@ -111,7 +111,7 @@ namespace sandbox_databases
             reader = command_category.ExecuteReader();
             while (reader.Read())
             {
-                categoryUser = reader["category"].ToString();
+                categoryUser = reader["наименование_должности"].ToString();
             }
 
             
@@ -123,7 +123,7 @@ namespace sandbox_databases
                 mainForm.Show();
             }
             else
-            if (table.Rows.Count > 0 && categoryUser == "office")
+            if (table.Rows.Count > 0 && categoryUser == "rukovoditel")
             {
                 logos.Value = categoryUser;
                 this.Hide();
@@ -133,7 +133,7 @@ namespace sandbox_databases
                 
             }
             else
-            if (table.Rows.Count > 0 && categoryUser == "company")
+            if (table.Rows.Count > 0 && categoryUser == "sotrudnik")
             {
                 logos.Value = categoryUser;
                 this.Hide();

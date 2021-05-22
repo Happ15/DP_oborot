@@ -47,7 +47,6 @@
             this.textBox1_pas = new System.Windows.Forms.TextBox();
             this.textBox1_tel = new System.Windows.Forms.TextBox();
             this.textBox1_cat = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -193,7 +192,7 @@
             // userNameField
             // 
             this.userNameField.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.userNameField.Location = new System.Drawing.Point(74, 173);
+            this.userNameField.Location = new System.Drawing.Point(74, 230);
             this.userNameField.Margin = new System.Windows.Forms.Padding(4);
             this.userNameField.Name = "userNameField";
             this.userNameField.Size = new System.Drawing.Size(299, 44);
@@ -204,7 +203,7 @@
             // userSurnameField
             // 
             this.userSurnameField.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.userSurnameField.Location = new System.Drawing.Point(74, 230);
+            this.userSurnameField.Location = new System.Drawing.Point(74, 172);
             this.userSurnameField.Margin = new System.Windows.Forms.Padding(4);
             this.userSurnameField.Name = "userSurnameField";
             this.userSurnameField.Size = new System.Drawing.Size(299, 44);
@@ -251,7 +250,7 @@
             // textBox1_pas
             // 
             this.textBox1_pas.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1_pas.Location = new System.Drawing.Point(445, 230);
+            this.textBox1_pas.Location = new System.Drawing.Point(445, 172);
             this.textBox1_pas.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1_pas.Name = "textBox1_pas";
             this.textBox1_pas.Size = new System.Drawing.Size(316, 44);
@@ -262,7 +261,7 @@
             // textBox1_tel
             // 
             this.textBox1_tel.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1_tel.Location = new System.Drawing.Point(445, 285);
+            this.textBox1_tel.Location = new System.Drawing.Point(445, 230);
             this.textBox1_tel.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1_tel.Name = "textBox1_tel";
             this.textBox1_tel.Size = new System.Drawing.Size(316, 44);
@@ -273,7 +272,7 @@
             // textBox1_cat
             // 
             this.textBox1_cat.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1_cat.Location = new System.Drawing.Point(445, 340);
+            this.textBox1_cat.Location = new System.Drawing.Point(445, 284);
             this.textBox1_cat.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1_cat.Name = "textBox1_cat";
             this.textBox1_cat.Size = new System.Drawing.Size(316, 44);
@@ -281,22 +280,12 @@
             this.textBox1_cat.Enter += new System.EventHandler(this.textBox1_cat_Enter);
             this.textBox1_cat.Leave += new System.EventHandler(this.textBox1_cat_Leave);
             // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Candara", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dateTimePicker1.Font = new System.Drawing.Font("Candara", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(445, 176);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(316, 36);
-            this.dateTimePicker1.TabIndex = 24;
-            // 
             // RegisterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(792, 522);
-            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.textBox1_cat);
             this.Controls.Add(this.textBox1_tel);
             this.Controls.Add(this.textBox1_pas);
@@ -346,6 +335,5 @@
         private System.Windows.Forms.TextBox textBox1_cat;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }

@@ -14,6 +14,8 @@ namespace sandbox_databases
 {
     public partial class DeleteUserForm : Form
     {
+        internal string log_id = "";
+        internal string vxod_id = "";
         public DeleteUserForm()
         {
             InitializeComponent();
@@ -68,9 +70,52 @@ namespace sandbox_databases
         private void buttonRegister_Click(object sender, EventArgs e)
         {
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("DELETE FROM `holding_2`.`users` WHERE `Логин`=@login", db.getConnection());
 
-            command.Parameters.Add("@login", MySqlDbType.VarChar).Value = userNameField.Text;
+            MySqlDataReader reader;
+
+            MySqlCommand command_log = new MySqlCommand("select sotrudnik.id from `sotrudnik` join vxod on SOTRUDNIK.id = SOTRUDNIK_id WHERE login = @login", db.getConnection());
+
+            command_log.Parameters.Add("@login", MySqlDbType.VarChar).Value = userNameField.Text;
+            
+
+            db.openConnection();
+
+            reader = command_log.ExecuteReader();
+            while (reader.Read())
+            {
+                log_id = reader["id"].ToString();
+            }
+
+            db.closeConnection();
+
+            MySqlCommand command_vxod_id = new MySqlCommand("select vxod.id from `sotrudnik` join vxod on SOTRUDNIK.id = SOTRUDNIK_id WHERE login = @login", db.getConnection());
+
+            command_vxod_id.Parameters.Add("@login", MySqlDbType.VarChar).Value = userNameField.Text;
+
+
+            db.openConnection();
+
+            reader = command_vxod_id.ExecuteReader();
+            while (reader.Read())
+            {
+                vxod_id = reader["id"].ToString();
+            }
+
+            db.closeConnection();
+
+            MySqlCommand command_del_vxod = new MySqlCommand("DELETE FROM `oborot`.`vxod` WHERE (`id` = @vxod_id);", db.getConnection());
+
+            command_del_vxod.Parameters.Add("@vxod_id", MySqlDbType.VarChar).Value = vxod_id;
+
+            db.openConnection();
+
+            command_del_vxod.ExecuteNonQuery();
+
+            db.closeConnection();
+
+            MySqlCommand command = new MySqlCommand("DELETE FROM `oborot`.`sotrudnik` WHERE (`id` = @log_id);", db.getConnection());
+
+            command.Parameters.Add("@log_id", MySqlDbType.VarChar).Value = log_id;
 
             db.openConnection();
 

@@ -14,6 +14,7 @@ namespace sandbox_databases
 {
     public partial class RegisterForm : Form
     {
+        internal string vxod_id = "";
         public RegisterForm()
         {
             InitializeComponent();
@@ -22,11 +23,11 @@ namespace sandbox_databases
             userSurnameField.Text = "Введите фамилию";
             textBox_login.Text = "Введите логин";
             textBox_pass.Text = "Введите пароль";
-            textBox1_pas.Text = "Номер,серия паспорта";
+            textBox1_pas.Text = "Электронная почта";
             textBox1_tel.Text = "Номер телефона";
-            textBox1_cat.Text = "Введите категорию";
+            textBox1_cat.Text = "Введите должность";
             textBox1_otch.Text = "Введите отчество";
-            textBox1_pol.Text = "Введите пол";
+            textBox1_pol.Text = "Введите подразделение";
 
             userNameField.ForeColor = Color.Gray;
             textBox_login.ForeColor = Color.Gray;
@@ -132,9 +133,9 @@ namespace sandbox_databases
             else
             if (userNameField.Text == "Введите имя" || userSurnameField.Text == "Введите фамилию" ||
                 textBox_login.Text == "Введите логин" || textBox_pass.Text == "Введите пароль"
-                 || textBox1_otch.Text == "Введите отчество" || textBox1_pol.Text == "Введите пол"
-                  || textBox1_pas.Text == "Номер,серия паспорта" 
-                   || textBox1_tel.Text == "Номер телефона" || textBox1_cat.Text == "Введите категорию")
+                 || textBox1_otch.Text == "Введите отчество" || textBox1_pol.Text == "Введите подразделение"
+                  || textBox1_pas.Text == "Электронная почта"
+                   || textBox1_tel.Text == "Номер телефона" || textBox1_cat.Text == "Введите должность")
             {
                 MessageBox.Show("Введите данные");
                 return;
@@ -144,20 +145,20 @@ namespace sandbox_databases
                 return;
 
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("INSERT INTO `holding_2`.`users` (`Логин`, `Пароль`, `Имя`, `Фамилия`, `Отчество`," +
-                " `Пол`, `Номер,серия паспорта`, `Дата рождения`, `Телефон`, `category`)" +
-                " VALUES (@login, @pass, @name, @surname, @otch, @pol, @pas, @date, @tel, @cat)", db.getConnection());
 
-            command.Parameters.Add("@login", MySqlDbType.VarChar).Value = textBox_login.Text;
-            command.Parameters.Add("@pass", MySqlDbType.VarChar).Value = textBox_pass.Text;
+            MySqlDataReader reader;
+
+            MySqlCommand command = new MySqlCommand("INSERT INTO `oborot`.`sotrudnik` (`Фамилия`, `Имя`, `Отчество`," +
+                " `Телефон`, `Электронная почта`, `DOLZNOST_id`, `PODRAZDELENIE_id`)" +
+                " VALUES (@surname, @name, @otch, @tel, @mail, @dol_id, @pod_id)", db.getConnection());
+
             command.Parameters.Add("@name", MySqlDbType.VarChar).Value = userNameField.Text;
             command.Parameters.Add("@surname", MySqlDbType.VarChar).Value = userSurnameField.Text;
             command.Parameters.Add("@otch", MySqlDbType.VarChar).Value = textBox1_otch.Text;
-            command.Parameters.Add("@pol", MySqlDbType.VarChar).Value = textBox1_pol.Text;
-            command.Parameters.Add("@pas", MySqlDbType.VarChar).Value = textBox1_pas.Text;
-            command.Parameters.Add("@date", MySqlDbType.Date).Value = dateTimePicker1.Value;
             command.Parameters.Add("@tel", MySqlDbType.VarChar).Value = textBox1_tel.Text;
-            command.Parameters.Add("@cat", MySqlDbType.VarChar).Value = textBox1_cat.Text;
+            command.Parameters.Add("@mail", MySqlDbType.VarChar).Value = textBox1_pas.Text;
+            command.Parameters.Add("@dol_id", MySqlDbType.VarChar).Value = textBox1_cat.Text;
+            command.Parameters.Add("@pod_id", MySqlDbType.VarChar).Value = textBox1_pol.Text;
 
             db.openConnection();
 
@@ -165,6 +166,39 @@ namespace sandbox_databases
                 MessageBox.Show("Аккаунт создан");
             else
                 MessageBox.Show("Аккаунт не создан");
+
+            db.closeConnection();
+
+            MySqlCommand command_vxod_id = new MySqlCommand("select id from `sotrudnik` where Имя = @name AND Фамилия = @surname AND Отчество = @otch AND Телефон = @tel AND `Электронная почта` = @mail AND DOLZNOST_id = @dol_id AND PODRAZDELENIE_id = @pod_id", db.getConnection());
+
+            command_vxod_id.Parameters.Add("@name", MySqlDbType.VarChar).Value = userNameField.Text;
+            command_vxod_id.Parameters.Add("@surname", MySqlDbType.VarChar).Value = userSurnameField.Text;
+            command_vxod_id.Parameters.Add("@otch", MySqlDbType.VarChar).Value = textBox1_otch.Text;
+            command_vxod_id.Parameters.Add("@tel", MySqlDbType.VarChar).Value = textBox1_tel.Text;
+            command_vxod_id.Parameters.Add("@mail", MySqlDbType.VarChar).Value = textBox1_pas.Text;
+            command_vxod_id.Parameters.Add("@dol_id", MySqlDbType.VarChar).Value = textBox1_cat.Text;
+            command_vxod_id.Parameters.Add("@pod_id", MySqlDbType.VarChar).Value = textBox1_pol.Text;
+
+            db.openConnection();
+
+            reader = command_vxod_id.ExecuteReader();
+            while (reader.Read())
+            {
+                vxod_id = reader["id"].ToString();
+            }
+
+            db.closeConnection();
+
+            MySqlCommand command_vxod = new MySqlCommand("INSERT INTO `oborot`.`vxod` (`login`, `password`, `SOTRUDNIK_id`)" +
+               " VALUES (@login, @pas, @sotr_id)", db.getConnection());
+
+            command_vxod.Parameters.Add("@login", MySqlDbType.VarChar).Value = textBox_login.Text;
+            command_vxod.Parameters.Add("@pas", MySqlDbType.VarChar).Value = textBox_pass.Text;
+            command_vxod.Parameters.Add("@sotr_id", MySqlDbType.VarChar).Value = vxod_id;
+
+            db.openConnection();
+
+            command_vxod.ExecuteNonQuery();
 
             db.closeConnection();
         }
@@ -179,7 +213,7 @@ namespace sandbox_databases
 
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            MySqlCommand command = new MySqlCommand("select * from `users` where `Логин` = @uL", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from VXOD where login = @uL", db.getConnection());
             command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox_login.Text;
 
             adapter.SelectCommand = command;
@@ -242,7 +276,7 @@ namespace sandbox_databases
 
         private void textBox1_pas_Enter(object sender, EventArgs e)
         {
-            if (textBox1_pas.Text == "Номер,серия паспорта")
+            if (textBox1_pas.Text == "Электронная почта")
             {
                 textBox1_pas.Text = "";
                 textBox1_pas.ForeColor = Color.Black;
@@ -253,7 +287,7 @@ namespace sandbox_databases
         {
             if (textBox1_pas.Text == "")
             {
-                textBox1_pas.Text = "Номер,серия паспорта";
+                textBox1_pas.Text = "Электронная почта";
                 textBox1_pas.ForeColor = Color.Gray;
             }
         }
@@ -278,7 +312,7 @@ namespace sandbox_databases
 
         private void textBox1_cat_Enter(object sender, EventArgs e)
         {
-            if (textBox1_cat.Text == "Введите категорию")
+            if (textBox1_cat.Text == "Введите должность")
             {
                 textBox1_cat.Text = "";
                 textBox1_cat.ForeColor = Color.Black;
@@ -289,7 +323,7 @@ namespace sandbox_databases
         {
             if (textBox1_cat.Text == "")
             {
-                textBox1_cat.Text = "Введите категорию";
+                textBox1_cat.Text = "Введите должность";
                 textBox1_cat.ForeColor = Color.Gray;
             }
         }
@@ -314,7 +348,7 @@ namespace sandbox_databases
 
         private void textBox1_pol_Enter(object sender, EventArgs e)
         {
-            if (textBox1_pol.Text == "Введите пол")
+            if (textBox1_pol.Text == "Введите подразделение")
             {
                 textBox1_pol.Text = "";
                 textBox1_pol.ForeColor = Color.Black;
@@ -325,7 +359,7 @@ namespace sandbox_databases
         {
             if (textBox1_pol.Text == "")
             {
-                textBox1_pol.Text = "Введите пол";
+                textBox1_pol.Text = "Введите подразделение";
                 textBox1_pol.ForeColor = Color.Gray;
             }
         }
@@ -355,5 +389,6 @@ namespace sandbox_databases
         {
             label4.BackColor = Color.FromArgb(76, 75, 100);
         }
+
     }
 }

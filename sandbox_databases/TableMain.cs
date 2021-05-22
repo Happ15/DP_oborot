@@ -18,6 +18,7 @@ namespace sandbox_databases
         DataSet ds = new DataSet();
         int flagTable = 0;
         string flagTbl = "";
+        internal string vxod_id = "";
         public TableMain()
         {
             InitializeComponent();
@@ -114,7 +115,7 @@ namespace sandbox_databases
         private void label3_Click(object sender, EventArgs e)
         {
             flagTable = 1;
-            flagTbl = "users";
+            flagTbl = "SOTRUDNIK";
 
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -124,7 +125,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from users", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from sotrudnik", db.getConnection());
 
             db.openConnection();
 
@@ -138,7 +139,7 @@ namespace sandbox_databases
         private void label4_Click(object sender, EventArgs e)
         {
             flagTable = 2;
-            flagTbl = "category";
+            flagTbl = "VXOD";
 
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -148,7 +149,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from category", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from vxod", db.getConnection());
 
             db.openConnection();
 
@@ -162,7 +163,7 @@ namespace sandbox_databases
         private void label5_Click(object sender, EventArgs e)
         {
             flagTable = 3;
-            flagTbl = "company";
+            flagTbl = "PODRAZDELENIE";
 
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -172,7 +173,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from company", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from PODRAZDELENIE", db.getConnection());
 
             db.openConnection();
 
@@ -187,7 +188,7 @@ namespace sandbox_databases
         private void label6_Click(object sender, EventArgs e)
         {
             flagTable = 4;
-            flagTbl = "gen_direct";
+            flagTbl = "DOLZNOST";
 
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -197,7 +198,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from gen_direct", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from dolznost", db.getConnection());
 
             db.openConnection();
 
@@ -262,7 +263,7 @@ namespace sandbox_databases
         {
 
             flagTable = 6;
-            flagTbl = "adres";
+            flagTbl = "HISTORY";
 
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -272,7 +273,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from adres", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from HISTORY", db.getConnection());
 
             db.openConnection();
 
@@ -286,7 +287,7 @@ namespace sandbox_databases
         private void label9_Click(object sender, EventArgs e)
         {
             flagTable = 7;
-            flagTbl = "doc";
+            flagTbl = "DOKUMENT";
 
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -296,7 +297,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from doc", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from DOKUMENT", db.getConnection());
 
             db.openConnection();
 
@@ -314,29 +315,34 @@ namespace sandbox_databases
                 MessageBox.Show("Выберите таблицу");
                 return;
             }
+            if (flagTable == 1)
+            {
+                noneid_SOTRUDNIK();
+                return;
+            }
             if (flagTable == 2)
             {
-                noneidCat();
+                noneidVXOD();
                 return;
             }
             if (flagTable == 3)
             {
-                noneidcomp();
+                noneid_PODRAZDELENIE();
                 return;
             }
             if (flagTable == 4)
             {
-                noneidDir();
+                noneid_DOLZNOST();
                 return;
             }
             if (flagTable == 6)
             {
-                noneidadres();
+                noneid_HISTORY();
                 return;
             }
             if (flagTable == 7)
             {
-                noneiddoc();
+                noneid_DOKUMENT();
                 return;
             }
 
@@ -370,46 +376,114 @@ namespace sandbox_databases
             db.closeConnection();
         }
 
-        public void noneiddoc()
+        public void noneid_DOKUMENT()
         {
             string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
 
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("DELETE FROM doc " +
-                " WHERE `id` = @idx", db.getConnection());
-            MySqlCommand command3 = new MySqlCommand("DELETE FROM work_user_doc " +
-                " WHERE `doc_id` IN (select id from doc where id = @idx)", db.getConnection());
-            MySqlCommand command4 = new MySqlCommand("DELETE FROM gotov_doc " +
-                " WHERE `doc_id` IN (select id from doc where id = @idx)", db.getConnection());
+            MySqlCommand command = new MySqlCommand("DELETE FROM DOKUMENT " +
+                " WHERE `company_id` = @idx", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
 
-            command3.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+            db.openConnection();
+            if (command.ExecuteNonQuery() == 1)
+            {
 
-            command4.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+                MessageBox.Show("Запись удалена");
+            }
+            else
+                MessageBox.Show("Запись не удалена");
 
+            db.closeConnection();
+
+
+            //Это было до изменения программы
+            //DB db = new DB();
+            //MySqlCommand command = new MySqlCommand("DELETE FROM doc " +
+            //    " WHERE `id` = @idx", db.getConnection());
+            //MySqlCommand command3 = new MySqlCommand("DELETE FROM work_user_doc " +
+            //    " WHERE `doc_id` IN (select id from doc where id = @idx)", db.getConnection());
+            //MySqlCommand command4 = new MySqlCommand("DELETE FROM gotov_doc " +
+            //    " WHERE `doc_id` IN (select id from doc where id = @idx)", db.getConnection());
+
+            //command.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+
+            //command3.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+
+            //command4.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+
+
+            //db.openConnection();
+            //command4.ExecuteNonQuery();
+            //command3.ExecuteNonQuery();
+
+            //if (command.ExecuteNonQuery() == 1)
+            //{
+
+            //    MessageBox.Show("Запись удалена");
+            //}
+            //else
+            //    MessageBox.Show("Запись не удалена");
+
+            //db.closeConnection();
+        }
+
+        public void noneid_SOTRUDNIK()
+        {
+            string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
             
+
+            DB db = new DB();
+
+            MySqlDataReader reader;
+
+
+            MySqlCommand command_vxod_id = new MySqlCommand("select vxod.id from `sotrudnik` join vxod on SOTRUDNIK.id = SOTRUDNIK_id WHERE SOTRUDNIK.id = @SOTR_ID", db.getConnection());
+
+            command_vxod_id.Parameters.Add("@SOTR_ID", MySqlDbType.VarChar).Value = ids;
+
+
             db.openConnection();
-            command4.ExecuteNonQuery();
-            command3.ExecuteNonQuery();
+
+            reader = command_vxod_id.ExecuteReader();
+            while (reader.Read())
+            {
+                vxod_id = reader["id"].ToString();
+            }
+
+            db.closeConnection();
+
+            MySqlCommand command_del_vxod = new MySqlCommand("DELETE FROM `oborot`.`vxod` WHERE (`id` = @vxod_id);", db.getConnection());
+
+            command_del_vxod.Parameters.Add("@vxod_id", MySqlDbType.VarChar).Value = vxod_id;
+
+            db.openConnection();
+
+            command_del_vxod.ExecuteNonQuery();
+
+            db.closeConnection();
+
+            MySqlCommand command = new MySqlCommand("DELETE FROM `oborot`.`sotrudnik` WHERE (`id` = @log_id);", db.getConnection());
+
+            command.Parameters.Add("@log_id", MySqlDbType.VarChar).Value = ids;
+
+            db.openConnection();
 
             if (command.ExecuteNonQuery() == 1)
-            {
-
-                MessageBox.Show("Запись удалена");
-            }
+                MessageBox.Show("Аккаунт удален");
             else
-                MessageBox.Show("Запись не удалена");
+                MessageBox.Show("Аккаунт не удален");
 
             db.closeConnection();
         }
 
-        public void noneidadres()
+        public void noneid_HISTORY()
         {
             string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
 
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("DELETE FROM adres " +
+            MySqlCommand command = new MySqlCommand("DELETE FROM HISTORY " +
                 " WHERE `company_id` = @idx", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
@@ -426,18 +500,17 @@ namespace sandbox_databases
             db.closeConnection();
         }
 
-        public void noneidDir()
+        public void noneid_DOLZNOST()
         {
             string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
 
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("DELETE FROM gen_direct " +
+            MySqlCommand command = new MySqlCommand("DELETE FROM DOLZNOST " +
                 " WHERE `id` = @idx", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
 
             db.openConnection();
-            noneidcomp();
             if (command.ExecuteNonQuery() == 1)
             {
 
@@ -449,56 +522,74 @@ namespace sandbox_databases
             db.closeConnection();
         }
 
-        public void noneidcomp()
+        public void noneid_PODRAZDELENIE()
         {
             string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
 
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("DELETE FROM company " +
+            MySqlCommand command = new MySqlCommand("DELETE FROM PODRAZDELENIE " +
                 " WHERE `id` = @idx", db.getConnection());
-            MySqlCommand command1 = new MySqlCommand("DELETE FROM adres " +
-                " WHERE `company_id` = @idx", db.getConnection());
-            MySqlCommand command2 = new MySqlCommand("DELETE FROM doc " +
-                " WHERE `company_id` = @idx", db.getConnection());
-            MySqlCommand command3 = new MySqlCommand("DELETE FROM work_user_doc " +
-                " WHERE `doc_id` IN (select id from doc where company_id = @idx)", db.getConnection());
-            MySqlCommand command4 = new MySqlCommand("DELETE FROM gotov_doc " +
-                " WHERE `doc_id` IN (select id from doc where company_id = @idx)", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
 
-            command1.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
-
-            command2.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
-
-            command3.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
-
-            command4.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
-
             db.openConnection();
-            command4.ExecuteNonQuery();
-            command3.ExecuteNonQuery();
-            command1.ExecuteNonQuery();
-            command2.ExecuteNonQuery();
-            
             if (command.ExecuteNonQuery() == 1)
             {
-                
+
                 MessageBox.Show("Запись удалена");
             }
             else
                 MessageBox.Show("Запись не удалена");
 
             db.closeConnection();
+
+            //Это было до изменения программы может пригодится
+            //DB db = new DB();
+            //MySqlCommand command = new MySqlCommand("DELETE FROM company " +
+            //    " WHERE `id` = @idx", db.getConnection());
+            //MySqlCommand command1 = new MySqlCommand("DELETE FROM adres " +
+            //    " WHERE `company_id` = @idx", db.getConnection());
+            //MySqlCommand command2 = new MySqlCommand("DELETE FROM doc " +
+            //    " WHERE `company_id` = @idx", db.getConnection());
+            //MySqlCommand command3 = new MySqlCommand("DELETE FROM work_user_doc " +
+            //    " WHERE `doc_id` IN (select id from doc where company_id = @idx)", db.getConnection());
+            //MySqlCommand command4 = new MySqlCommand("DELETE FROM gotov_doc " +
+            //    " WHERE `doc_id` IN (select id from doc where company_id = @idx)", db.getConnection());
+
+            //command.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+
+            //command1.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+
+            //command2.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+
+            //command3.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+
+            //command4.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
+
+            //db.openConnection();
+            //command4.ExecuteNonQuery();
+            //command3.ExecuteNonQuery();
+            //command1.ExecuteNonQuery();
+            //command2.ExecuteNonQuery();
+
+            //if (command.ExecuteNonQuery() == 1)
+            //{
+
+            //    MessageBox.Show("Запись удалена");
+            //}
+            //else
+            //    MessageBox.Show("Запись не удалена");
+
+            //db.closeConnection();
         }
 
-        public void noneidCat()
+        public void noneidVXOD()
         {
             string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
 
             DB db = new DB();
             MySqlCommand command = new MySqlCommand("DELETE FROM " + flagTbl +
-                " WHERE `Наименование` = @idx", db.getConnection());
+                " WHERE `id` = @idx", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.VarChar).Value = ids;
 
@@ -558,10 +649,10 @@ namespace sandbox_databases
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (flagTbl == "users")
+            if (flagTbl == "SOTRUDNIK")
             {
                 flagTable = 1;
-                flagTbl = "users";
+                flagTbl = "SOTRUDNIK";
 
                 ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -571,7 +662,7 @@ namespace sandbox_databases
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from users", db.getConnection());
+                MySqlCommand command = new MySqlCommand("select * from SOTRUDNIK", db.getConnection());
 
                 db.openConnection();
 
@@ -582,10 +673,10 @@ namespace sandbox_databases
                 db.closeConnection();
             }
             else
-            if (flagTbl == "category")
+            if (flagTbl == "VXOD")
             {
                 flagTable = 2;
-                flagTbl = "category";
+                flagTbl = "VXOD";
 
                 ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -595,7 +686,7 @@ namespace sandbox_databases
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from category", db.getConnection());
+                MySqlCommand command = new MySqlCommand("select * from VXOD", db.getConnection());
 
                 db.openConnection();
 
@@ -606,10 +697,10 @@ namespace sandbox_databases
                 db.closeConnection();
             }
             else
-            if (flagTbl == "company")
+            if (flagTbl == "PODRAZDELENIE")
             {
                 flagTable = 3;
-                flagTbl = "company";
+                flagTbl = "PODRAZDELENIE";
 
                 ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -619,7 +710,7 @@ namespace sandbox_databases
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from company", db.getConnection());
+                MySqlCommand command = new MySqlCommand("select * from PODRAZDELENIE", db.getConnection());
 
                 db.openConnection();
 
@@ -629,36 +720,36 @@ namespace sandbox_databases
 
                 db.closeConnection();
             }
-            else
-            if (flagTbl == "sessions")
-            {
-                flagTable = 5;
-                flagTbl = "sessions";
+            //else
+            //if (flagTbl == "sessions")
+            //{
+            //    flagTable = 5;
+            //    flagTbl = "sessions";
 
-                ds.Reset();
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
+            //    ds.Reset();
+            //    MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-                DB db = new DB();
+            //    DB db = new DB();
 
-                dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dataGridView1.AllowUserToAddRows = false;
+            //    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //    dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from session", db.getConnection());
+            //    MySqlCommand command = new MySqlCommand("select * from session", db.getConnection());
 
-                db.openConnection();
+            //    db.openConnection();
 
-                adapter.SelectCommand = command;
-                adapter.Fill(ds);
-                dataGridView1.DataSource = ds.Tables[0];
+            //    adapter.SelectCommand = command;
+            //    adapter.Fill(ds);
+            //    dataGridView1.DataSource = ds.Tables[0];
 
-                db.closeConnection();
+            //    db.closeConnection();
                 
-            }
+            //}
             else
-            if (flagTbl == "gen_direct")
+            if (flagTbl == "DOLZNOST")
             {
                 flagTable = 4;
-                flagTbl = "gen_direct";
+                flagTbl = "DOLZNOST";
 
                 ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -668,7 +759,7 @@ namespace sandbox_databases
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from gen_direct", db.getConnection());
+                MySqlCommand command = new MySqlCommand("select * from DOLZNOST", db.getConnection());
 
                 db.openConnection();
 
@@ -679,10 +770,10 @@ namespace sandbox_databases
                 db.closeConnection();
             }
             else
-            if (flagTbl == "adres")
+            if (flagTbl == "HISTORY")
             {
                 flagTable = 6;
-                flagTbl = "adres";
+                flagTbl = "HISTORY";
 
                 ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -692,7 +783,7 @@ namespace sandbox_databases
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from adres", db.getConnection());
+                MySqlCommand command = new MySqlCommand("select * from HISTORY", db.getConnection());
 
                 db.openConnection();
 
@@ -703,10 +794,10 @@ namespace sandbox_databases
                 db.closeConnection();
             }
             else
-            if (flagTbl == "doc")
+            if (flagTbl == "DOKUMENT")
             {
                 flagTable = 7;
-                flagTbl = "doc";
+                flagTbl = "DOKUMENT";
 
                 ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -716,7 +807,7 @@ namespace sandbox_databases
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from doc", db.getConnection());
+                MySqlCommand command = new MySqlCommand("select * from DOKUMENT", db.getConnection());
 
                 db.openConnection();
 
@@ -727,10 +818,10 @@ namespace sandbox_databases
                 db.closeConnection();
             }
             else
-            if (flagTbl == "work_user_doc")
+            if (flagTbl == "work_TIP_DOKUMENTAuser_doc")
             {
                 flagTable = 8;
-                flagTbl = "work_user_doc";
+                flagTbl = "TIP_DOKUMENTA";
 
                 ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -740,7 +831,7 @@ namespace sandbox_databases
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from work_user_doc", db.getConnection());
+                MySqlCommand command = new MySqlCommand("select * from TIP_DOKUMENTA", db.getConnection());
 
                 db.openConnection();
 
@@ -750,30 +841,30 @@ namespace sandbox_databases
 
                 db.closeConnection();
             }
-            else
-            if (flagTbl == "gotov_doc")
-            {
-                flagTable = 9;
-                flagTbl = "gotov_doc";
+            //else
+            //if (flagTbl == "gotov_doc")
+            //{
+            //    flagTable = 9;
+            //    flagTbl = "gotov_doc";
 
-                ds.Reset();
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
+            //    ds.Reset();
+            //    MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-                DB db = new DB();
+            //    DB db = new DB();
 
-                dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dataGridView1.AllowUserToAddRows = false;
+            //    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //    dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from gotov_doc", db.getConnection());
+            //    MySqlCommand command = new MySqlCommand("select * from gotov_doc", db.getConnection());
 
-                db.openConnection();
+            //    db.openConnection();
 
-                adapter.SelectCommand = command;
-                adapter.Fill(ds);
-                dataGridView1.DataSource = ds.Tables[0];
+            //    adapter.SelectCommand = command;
+            //    adapter.Fill(ds);
+            //    dataGridView1.DataSource = ds.Tables[0];
 
-                db.closeConnection();
-            }
+            //    db.closeConnection();
+            //}
             else
             if (flagTbl == "")
             {
@@ -801,7 +892,7 @@ namespace sandbox_databases
         private void label10_Click(object sender, EventArgs e)
         {
             flagTable = 8;
-            flagTbl = "work_user_doc";
+            flagTbl = "TIP_DOKUMENTA";
 
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -811,7 +902,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from work_user_doc", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from TIP_DOKUMENTA", db.getConnection());
 
             db.openConnection();
 

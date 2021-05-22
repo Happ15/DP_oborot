@@ -46,7 +46,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -190,9 +189,9 @@
             this.label3.Font = new System.Drawing.Font("Candara", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.Location = new System.Drawing.Point(900, 141);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(186, 35);
+            this.label3.Size = new System.Drawing.Size(162, 35);
             this.label3.TabIndex = 43;
-            this.label3.Text = "Пользователи";
+            this.label3.Text = "Сотрудники";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
@@ -202,9 +201,9 @@
             this.label4.Font = new System.Drawing.Font("Candara", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.Location = new System.Drawing.Point(900, 193);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(145, 35);
+            this.label4.Size = new System.Drawing.Size(186, 35);
             this.label4.TabIndex = 44;
-            this.label4.Text = "Категории";
+            this.label4.Text = "Логин/Пароль";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label5
@@ -214,9 +213,9 @@
             this.label5.Font = new System.Drawing.Font("Candara", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(900, 304);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(140, 35);
+            this.label5.Size = new System.Drawing.Size(208, 35);
             this.label5.TabIndex = 45;
-            this.label5.Text = "Компании";
+            this.label5.Text = "Подразделения";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
@@ -226,9 +225,9 @@
             this.label6.Font = new System.Drawing.Font("Candara", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label6.Location = new System.Drawing.Point(900, 247);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(150, 35);
+            this.label6.Size = new System.Drawing.Size(154, 35);
             this.label6.TabIndex = 46;
-            this.label6.Text = "Директора";
+            this.label6.Text = "Должности";
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // label8
@@ -238,9 +237,9 @@
             this.label8.Font = new System.Drawing.Font("Candara", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label8.Location = new System.Drawing.Point(900, 360);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(233, 35);
+            this.label8.Size = new System.Drawing.Size(275, 35);
             this.label8.TabIndex = 48;
-            this.label8.Text = "Адреса компаний";
+            this.label8.Text = "История документов";
             this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // label9
@@ -290,22 +289,10 @@
             this.label10.Font = new System.Drawing.Font("Candara", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label10.Location = new System.Drawing.Point(900, 477);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(268, 35);
+            this.label10.Size = new System.Drawing.Size(197, 35);
             this.label10.TabIndex = 52;
-            this.label10.Text = "Документы в работе";
+            this.label10.Text = "Тип документа";
             this.label10.Click += new System.EventHandler(this.label10_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label11.Font = new System.Drawing.Font("Candara", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label11.Location = new System.Drawing.Point(900, 536);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(262, 35);
-            this.label11.TabIndex = 53;
-            this.label11.Text = "Готовые документы";
-            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // TableMain
             // 
@@ -313,7 +300,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(1181, 647);
-            this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
@@ -359,7 +345,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
