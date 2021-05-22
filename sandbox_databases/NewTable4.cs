@@ -17,26 +17,9 @@ namespace sandbox_databases
         {
             InitializeComponent();
 
-            textBox1_name.Text = "Имя";
+            textBox1_name.Text = "Наименование должности";
             textBox1_name.ForeColor = Color.Gray;
 
-            textBox1_surname.Text = "Фамилия";
-            textBox1_surname.ForeColor = Color.Gray;
-
-            textBox1_otch.Text = "Отчество";
-            textBox1_otch.ForeColor = Color.Gray;
-
-            textBox1_pol.Text = "Пол";
-            textBox1_pol.ForeColor = Color.Gray;
-
-            textBox1_pas.Text = "Номер,серия паспорта";
-            textBox1_pas.ForeColor = Color.Gray;
-
-            textBox1_mail.Text = "e-mail";
-            textBox1_mail.ForeColor = Color.Gray;
-
-            textBox1_tel.Text = "Номер телефона";
-            textBox1_tel.ForeColor = Color.Gray;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -60,7 +43,7 @@ namespace sandbox_databases
 
         private void textBox1_name_Enter(object sender, EventArgs e)
         {
-            if (textBox1_name.Text == "Имя")
+            if (textBox1_name.Text == "Наименование должности")
             {
                 textBox1_name.Text = "";
                 textBox1_name.ForeColor = Color.Black;
@@ -71,115 +54,8 @@ namespace sandbox_databases
         {
             if (textBox1_name.Text == "")
             {
-                textBox1_name.Text = "Имя";
+                textBox1_name.Text = "Наименование должности";
                 textBox1_name.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_surname_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_surname.Text == "Фамилия")
-            {
-                textBox1_surname.Text = "";
-                textBox1_surname.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_surname_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_surname.Text == "")
-            {
-                textBox1_surname.Text = "Фамилия";
-                textBox1_surname.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_otch_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_otch.Text == "Отчество")
-            {
-                textBox1_otch.Text = "";
-                textBox1_otch.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_otch_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_otch.Text == "")
-            {
-                textBox1_otch.Text = "Отчество";
-                textBox1_otch.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_pol_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_pol.Text == "Пол")
-            {
-                textBox1_pol.Text = "";
-                textBox1_pol.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_pol_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_pol.Text == "")
-            {
-                textBox1_pol.Text = "Пол";
-                textBox1_pol.ForeColor = Color.Gray;
-            }
-        }
-        private void textBox1_pas_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_pas.Text == "Номер,серия паспорта")
-            {
-                textBox1_pas.Text = "";
-                textBox1_pas.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_pas_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_pas.Text == "")
-            {
-                textBox1_pas.Text = "Номер,серия паспорта";
-                textBox1_pas.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_mail_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_mail.Text == "e-mail")
-            {
-                textBox1_mail.Text = "";
-                textBox1_mail.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_mail_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_mail.Text == "")
-            {
-                textBox1_mail.Text = "e-mail";
-                textBox1_mail.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_tel_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_tel.Text == "Номер телефона")
-            {
-                textBox1_tel.Text = "";
-                textBox1_tel.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_tel_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_tel.Text == "")
-            {
-                textBox1_tel.Text = "Номер телефона";
-                textBox1_tel.ForeColor = Color.Gray;
             }
         }
 
@@ -220,19 +96,13 @@ namespace sandbox_databases
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (textBox1_name.Text.Contains(' ') || textBox1_surname.Text.Contains(' ') ||
-                textBox1_otch.Text.Contains(' ') || textBox1_pol.Text.Contains(' ')
-                || textBox1_pas.Text.Contains(' ')
-                 || textBox1_mail.Text.Contains(' ') || textBox1_tel.Text.Contains(' '))
+            if (textBox1_name.Text.Contains(' '))
             {
-                MessageBox.Show("Введите корректные значения");
+                MessageBox.Show("Введите корректное значение");
                 return;
             }
             else
-            if (textBox1_name.Text == "Имя" || textBox1_surname.Text == "Фамилия"
-                 || textBox1_otch.Text == "Отчество" || textBox1_pol.Text == "Пол"
-                  || textBox1_pas.Text == "Номер,серия паспорта" 
-                   || textBox1_tel.Text == "Номер телефона" || textBox1_mail.Text == "e-mail")
+            if (textBox1_name.Text == "Наименование_должности")
             {
                 MessageBox.Show("Введите данные");
                 return;
@@ -242,18 +112,10 @@ namespace sandbox_databases
                 return;
 
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("INSERT INTO `holding_2`.`gen_direct` (`Имя`, `Фамилия`, `Отчество`," +
-                " `Пол`, `Дата рождения`, `Номер,серия паспорта`, `E-mail`, `Телефон`)" +
-                " VALUES (@name, @surname, @otch, @pol, @date, @pas, @mail, @tel)", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `oborot`.`DOLZNOST` (`Наименование_должности`)" +
+                " VALUES (@name)", db.getConnection());
 
             command.Parameters.Add("@name", MySqlDbType.VarChar).Value = textBox1_name.Text;
-            command.Parameters.Add("@surname", MySqlDbType.VarChar).Value = textBox1_surname.Text;
-            command.Parameters.Add("@otch", MySqlDbType.VarChar).Value = textBox1_otch.Text;
-            command.Parameters.Add("@pol", MySqlDbType.VarChar).Value = textBox1_pol.Text;
-            command.Parameters.Add("@pas", MySqlDbType.VarChar).Value = textBox1_pas.Text;
-            command.Parameters.Add("@date", MySqlDbType.Date).Value = dateTimePicker1.Value;
-            command.Parameters.Add("@tel", MySqlDbType.VarChar).Value = textBox1_tel.Text;
-            command.Parameters.Add("@mail", MySqlDbType.VarChar).Value = textBox1_mail.Text;
 
             db.openConnection();
 
@@ -273,15 +135,15 @@ namespace sandbox_databases
 
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            MySqlCommand command = new MySqlCommand("select * from `gen_direct` where `Номер,серия паспорта` = @pas", db.getConnection());
-            command.Parameters.Add("@pas", MySqlDbType.VarChar).Value = textBox1_pas.Text;
+            MySqlCommand command = new MySqlCommand("select * from `DOLZNOST` where `Наименование_должности` = @pas", db.getConnection());
+            command.Parameters.Add("@pas", MySqlDbType.VarChar).Value = textBox1_name.Text;
 
             adapter.SelectCommand = command;
             adapter.Fill(table);
 
             if (table.Rows.Count > 0)
             {
-                MessageBox.Show("Введите корректные данные паспорта");
+                MessageBox.Show("Должность с таким наименованием уже существует");
                 return true;
             }
             else
