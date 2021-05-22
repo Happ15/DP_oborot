@@ -17,22 +17,25 @@ namespace sandbox_databases
         {
             InitializeComponent();
 
-            textBox1.Text = "Наименование категории";
+            textBox1.Text = "Логин";
             textBox1.ForeColor = Color.Gray;
 
-            textBox2.Text = "Пояснение";
+            textBox2.Text = "Пароль";
             textBox2.ForeColor = Color.Gray;
+
+            textBox3.Text = "id сотрудника";
+            textBox3.ForeColor = Color.Gray;
         }
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' '))
+            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' ') || textBox3.Text.Contains(' '))
             {
                 MessageBox.Show("Введите корректные значения");
                 return;
             }
             else
-            if (textBox1.Text == "Наименование категории" || textBox2.Text == "Пояснение")
+            if (textBox1.Text == "Логин" || textBox2.Text == "Пароль" || textBox3.Text == "id сотрудника")
             {
                 MessageBox.Show("Введите данные");
                 return;
@@ -42,10 +45,11 @@ namespace sandbox_databases
                 return;
 
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("INSERT INTO `holding_2`.`category` (`Наименование`, `Пояснение`) VALUES (@name, @info)", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `oborot`.`vxod` (`login`, `password`, `SOTRUDNIK_id`) VALUES (@name, @info, @sotr_id)", db.getConnection());
 
             command.Parameters.Add("@name", MySqlDbType.VarChar).Value = textBox1.Text;
             command.Parameters.Add("@info", MySqlDbType.VarChar).Value = textBox2.Text;
+            command.Parameters.Add("@sotr_id", MySqlDbType.VarChar).Value = textBox3.Text;
 
             db.openConnection();
 
@@ -59,7 +63,7 @@ namespace sandbox_databases
 
         private void textBox1_Enter(object sender, EventArgs e)
         {
-            if (textBox1.Text == "Наименование категории")
+            if (textBox1.Text == "Логин")
             {
                 textBox1.Text = "";
                 textBox1.ForeColor = Color.Black;
@@ -70,14 +74,14 @@ namespace sandbox_databases
         {
             if (textBox1.Text == "")
             {
-                textBox1.Text = "Наименование категории";
+                textBox1.Text = "Логин";
                 textBox1.ForeColor = Color.Gray;
             }
         }
 
         private void textBox2_Enter(object sender, EventArgs e)
         {
-            if (textBox2.Text == "Пояснение")
+            if (textBox2.Text == "Пароль")
             {
                 textBox2.Text = "";
                 textBox2.ForeColor = Color.Black;
@@ -88,7 +92,7 @@ namespace sandbox_databases
         {
             if (textBox2.Text == "")
             {
-                textBox2.Text = "Пояснение";
+                textBox2.Text = "Пароль";
                 textBox2.ForeColor = Color.Gray;
             }
         }
@@ -113,7 +117,7 @@ namespace sandbox_databases
 
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            MySqlCommand command = new MySqlCommand("select * from category where `Наименование` = @uL", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from vxod where `login` = @uL", db.getConnection());
             command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox1.Text;
 
             adapter.SelectCommand = command;
@@ -168,6 +172,24 @@ namespace sandbox_databases
         private void label1_MouseLeave(object sender, EventArgs e)
         {
             label1.BackColor = Color.FromArgb(76, 75, 100);
+        }
+
+        private void textBox3_Enter(object sender, EventArgs e)
+        {
+            if (textBox3.Text == "id сотрудника")
+            {
+                textBox3.Text = "";
+                textBox3.ForeColor = Color.Black;
+            }
+        }
+
+        private void textBox3_Leave(object sender, EventArgs e)
+        {
+            if (textBox3.Text == "")
+            {
+                textBox3.Text = "id сотрудника";
+                textBox3.ForeColor = Color.Gray;
+            }
         }
     }
 }
