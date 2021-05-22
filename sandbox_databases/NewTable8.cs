@@ -17,13 +17,7 @@ namespace sandbox_databases
         {
             InitializeComponent();
 
-            textBox3.Text = "Время";
-            textBox3.ForeColor = Color.Gray;
-
-            textBox1.Text = "id пользователя";
-            textBox1.ForeColor = Color.Gray;
-
-            textBox2.Text = "id документа";
+            textBox2.Text = "Тип документа";
             textBox2.ForeColor = Color.Gray;
         }
 
@@ -46,45 +40,9 @@ namespace sandbox_databases
             MainForm.Show();
         }
 
-        private void textBox3_Enter(object sender, EventArgs e)
-        {
-            if (textBox3.Text == "Время")
-            {
-                textBox3.Text = "";
-                textBox3.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox3_Leave(object sender, EventArgs e)
-        {
-            if (textBox3.Text == "")
-            {
-                textBox3.Text = "Время";
-                textBox3.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_Enter(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "id пользователя")
-            {
-                textBox1.Text = "";
-                textBox1.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_Leave(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "")
-            {
-                textBox1.Text = "id пользователя";
-                textBox1.ForeColor = Color.Gray;
-            }
-        }
-
         private void textBox2_Enter(object sender, EventArgs e)
         {
-            if (textBox2.Text == "id документа")
+            if (textBox2.Text == "Тип документа")
             {
                 textBox2.Text = "";
                 textBox2.ForeColor = Color.Black;
@@ -95,7 +53,7 @@ namespace sandbox_databases
         {
             if (textBox2.Text == "")
             {
-                textBox2.Text = "id документа";
+                textBox2.Text = "Тип документа";
                 textBox2.ForeColor = Color.Gray;
             }
         }
@@ -137,36 +95,23 @@ namespace sandbox_databases
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' ') || textBox3.Text.Contains(' '))
+            if (textBox2.Text.Contains(' '))
             {
                 MessageBox.Show("Введите корректные значения");
                 return;
             }
             else
-            if (textBox1.Text == "id пользователя" || textBox2.Text == "id документа" || textBox3.Text == "Время")
+            if (textBox2.Text == "Тип документа")
             {
                 MessageBox.Show("Введите данные");
                 return;
             }
 
-            if (isUserExists())
-                return;
-
-            if (isExists())
-                return;
-
-            if (isExistsDoc())
-                return;
-
             DB db = new DB();
-            MySqlCommand command1 = new MySqlCommand("INSERT INTO work_user_doc " +
-                "SET `Время` = @time," +
-                " users_id = (SELECT id FROM users WHERE `id` = @idu)," +
-                " doc_id = (SELECT id FROM doc WHERE `id` = @idd)", db.getConnection());
-
-            command1.Parameters.Add("@time", MySqlDbType.VarChar).Value = textBox3.Text;
-            command1.Parameters.Add("@idu", MySqlDbType.VarChar).Value = textBox1.Text;
-            command1.Parameters.Add("@idd", MySqlDbType.VarChar).Value = textBox2.Text;
+            MySqlCommand command1 = new MySqlCommand("INSERT INTO TIP_DOKUMENTA " +
+                "SET `Тип_Документа` = @tip", db.getConnection());
+            
+            command1.Parameters.Add("@tip", MySqlDbType.VarChar).Value = textBox2.Text;
 
             db.openConnection();
 
@@ -189,7 +134,7 @@ namespace sandbox_databases
             MySqlCommand command = new MySqlCommand("select * " +
                 "from users where id = @uL", db.getConnection());
 
-            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox1.Text;
+            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox2.Text;
 
             adapter.SelectCommand = command;
             adapter.Fill(table);

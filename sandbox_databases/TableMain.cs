@@ -818,7 +818,7 @@ namespace sandbox_databases
                 db.closeConnection();
             }
             else
-            if (flagTbl == "work_TIP_DOKUMENTAuser_doc")
+            if (flagTbl == "TIP_DOKUMENTA")
             {
                 flagTable = 8;
                 flagTbl = "TIP_DOKUMENTA";
