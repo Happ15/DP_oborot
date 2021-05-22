@@ -382,7 +382,7 @@ namespace sandbox_databases
 
             DB db = new DB();
             MySqlCommand command = new MySqlCommand("DELETE FROM DOKUMENT " +
-                " WHERE `company_id` = @idx", db.getConnection());
+                " WHERE `id` = @idx", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
 
@@ -484,7 +484,7 @@ namespace sandbox_databases
 
             DB db = new DB();
             MySqlCommand command = new MySqlCommand("DELETE FROM HISTORY " +
-                " WHERE `company_id` = @idx", db.getConnection());
+                " WHERE `id` = @idx", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.Int32).Value = ids;
 
@@ -610,7 +610,7 @@ namespace sandbox_databases
 
             DB db = new DB();
             MySqlCommand command = new MySqlCommand("DELETE FROM " + flagTbl +
-                " WHERE `doc_id` = @idx", db.getConnection());
+                " WHERE `id` = @idx", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.Int32).Value = id;
 
@@ -631,7 +631,7 @@ namespace sandbox_databases
 
             DB db = new DB();
             MySqlCommand command = new MySqlCommand("DELETE FROM " + flagTbl +
-                " WHERE `company_id` = @idx", db.getConnection());
+                " WHERE `id` = @idx", db.getConnection());
 
             command.Parameters.Add("@idx", MySqlDbType.Int32).Value = id;
 

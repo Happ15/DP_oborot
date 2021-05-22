@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1_ul = new System.Windows.Forms.TextBox();
-            this.textBox1_gor = new System.Windows.Forms.TextBox();
             this.textBox1_obl = new System.Windows.Forms.TextBox();
             this.textBox1_ind = new System.Windows.Forms.TextBox();
             this.registerLabel = new System.Windows.Forms.Label();
@@ -39,30 +37,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // textBox1_ul
-            // 
-            this.textBox1_ul.Font = new System.Drawing.Font("Comic Sans MS", 15.75F);
-            this.textBox1_ul.Location = new System.Drawing.Point(419, 175);
-            this.textBox1_ul.Multiline = true;
-            this.textBox1_ul.Name = "textBox1_ul";
-            this.textBox1_ul.Size = new System.Drawing.Size(369, 48);
-            this.textBox1_ul.TabIndex = 54;
-            this.textBox1_ul.Enter += new System.EventHandler(this.textBox1_ul_Enter);
-            this.textBox1_ul.Leave += new System.EventHandler(this.textBox1_ul_Leave);
-            // 
-            // textBox1_gor
-            // 
-            this.textBox1_gor.Font = new System.Drawing.Font("Comic Sans MS", 15.75F);
-            this.textBox1_gor.Location = new System.Drawing.Point(419, 121);
-            this.textBox1_gor.Multiline = true;
-            this.textBox1_gor.Name = "textBox1_gor";
-            this.textBox1_gor.Size = new System.Drawing.Size(369, 48);
-            this.textBox1_gor.TabIndex = 53;
-            this.textBox1_gor.Enter += new System.EventHandler(this.textBox1_gor_Enter);
-            this.textBox1_gor.Leave += new System.EventHandler(this.textBox1_gor_Leave);
             // 
             // textBox1_obl
             // 
@@ -70,7 +48,7 @@
             this.textBox1_obl.Location = new System.Drawing.Point(12, 175);
             this.textBox1_obl.Multiline = true;
             this.textBox1_obl.Name = "textBox1_obl";
-            this.textBox1_obl.Size = new System.Drawing.Size(369, 48);
+            this.textBox1_obl.Size = new System.Drawing.Size(265, 48);
             this.textBox1_obl.TabIndex = 51;
             this.textBox1_obl.Enter += new System.EventHandler(this.textBox1_obl_Enter);
             this.textBox1_obl.Leave += new System.EventHandler(this.textBox1_obl_Leave);
@@ -81,7 +59,7 @@
             this.textBox1_ind.Location = new System.Drawing.Point(12, 121);
             this.textBox1_ind.Multiline = true;
             this.textBox1_ind.Name = "textBox1_ind";
-            this.textBox1_ind.Size = new System.Drawing.Size(369, 48);
+            this.textBox1_ind.Size = new System.Drawing.Size(265, 48);
             this.textBox1_ind.TabIndex = 50;
             this.textBox1_ind.Enter += new System.EventHandler(this.textBox1_ind_Enter);
             this.textBox1_ind.Leave += new System.EventHandler(this.textBox1_ind_Leave);
@@ -91,7 +69,7 @@
             this.registerLabel.AutoSize = true;
             this.registerLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.registerLabel.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.registerLabel.Location = new System.Drawing.Point(315, 330);
+            this.registerLabel.Location = new System.Drawing.Point(222, 339);
             this.registerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.registerLabel.Name = "registerLabel";
             this.registerLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -104,7 +82,7 @@
             // 
             this.buttonRegister.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonRegister.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRegister.Location = new System.Drawing.Point(240, 265);
+            this.buttonRegister.Location = new System.Drawing.Point(147, 274);
             this.buttonRegister.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRegister.Name = "buttonRegister";
             this.buttonRegister.Size = new System.Drawing.Size(340, 52);
@@ -124,7 +102,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 104);
+            this.panel1.Size = new System.Drawing.Size(605, 104);
             this.panel1.TabIndex = 47;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NewTable6_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NewTable6_MouseMove);
@@ -134,7 +112,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Candara", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.ForeColor = System.Drawing.SystemColors.Window;
-            this.label4.Location = new System.Drawing.Point(295, 58);
+            this.label4.Location = new System.Drawing.Point(181, 58);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(222, 29);
@@ -148,7 +126,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Candara", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ForeColor = System.Drawing.SystemColors.Window;
-            this.label2.Location = new System.Drawing.Point(160, 9);
+            this.label2.Location = new System.Drawing.Point(46, 9);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(482, 49);
@@ -182,7 +160,7 @@
             this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(763, 0);
+            this.label1.Location = new System.Drawing.Point(568, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 36);
@@ -192,13 +170,33 @@
             this.label1.MouseEnter += new System.EventHandler(this.label1_MouseEnter);
             this.label1.MouseLeave += new System.EventHandler(this.label1_MouseLeave);
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Candara", 16.2F);
+            this.dateTimePicker1.Font = new System.Drawing.Font("Candara", 16.2F);
+            this.dateTimePicker1.Location = new System.Drawing.Point(328, 121);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(265, 40);
+            this.dateTimePicker1.TabIndex = 55;
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.AccessibleDescription = "Z";
+            this.dateTimePicker2.CalendarFont = new System.Drawing.Font("Candara", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.dateTimePicker2.Font = new System.Drawing.Font("Candara", 16.2F);
+            this.dateTimePicker2.Location = new System.Drawing.Point(328, 175);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(265, 40);
+            this.dateTimePicker2.TabIndex = 0;
+            // 
             // NewTable6
             // 
+            this.AccessibleDescription = "ZZ";
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 405);
-            this.Controls.Add(this.textBox1_ul);
-            this.Controls.Add(this.textBox1_gor);
+            this.ClientSize = new System.Drawing.Size(605, 405);
+            this.Controls.Add(this.dateTimePicker2);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.textBox1_obl);
             this.Controls.Add(this.textBox1_ind);
             this.Controls.Add(this.registerLabel);
@@ -218,8 +216,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox textBox1_ul;
-        private System.Windows.Forms.TextBox textBox1_gor;
         private System.Windows.Forms.TextBox textBox1_obl;
         private System.Windows.Forms.TextBox textBox1_ind;
         private System.Windows.Forms.Label registerLabel;
@@ -229,5 +225,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
     }
 }

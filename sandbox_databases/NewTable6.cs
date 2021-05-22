@@ -17,17 +17,12 @@ namespace sandbox_databases
         {
             InitializeComponent();
 
-            textBox1_ind.Text = "Дата получения";
+            textBox1_ind.Text = "id сотрудника";
             textBox1_ind.ForeColor = Color.Gray;
 
-            textBox1_obl.Text = "id сотрудника";
+            textBox1_obl.Text = "id документа";
             textBox1_obl.ForeColor = Color.Gray;
 
-            textBox1_gor.Text = "id документа";
-            textBox1_gor.ForeColor = Color.Gray;
-
-            textBox1_ul.Text = "Дата отправки";
-            textBox1_ul.ForeColor = Color.Gray;
 
         }
 
@@ -67,7 +62,7 @@ namespace sandbox_databases
 
         private void textBox1_ind_Enter(object sender, EventArgs e)
         {
-            if (textBox1_ind.Text == "Индекс компании")
+            if (textBox1_ind.Text == "id сотрудника")
             {
                 textBox1_ind.Text = "";
                 textBox1_ind.ForeColor = Color.Black;
@@ -78,14 +73,14 @@ namespace sandbox_databases
         {
             if (textBox1_ind.Text == "")
             {
-                textBox1_ind.Text = "Индекс компании";
+                textBox1_ind.Text = "id сотрудника";
                 textBox1_ind.ForeColor = Color.Gray;
             }
         }
 
         private void textBox1_obl_Enter(object sender, EventArgs e)
         {
-            if (textBox1_obl.Text == "Область")
+            if (textBox1_obl.Text == "id документа")
             {
                 textBox1_obl.Text = "";
                 textBox1_obl.ForeColor = Color.Black;
@@ -96,50 +91,10 @@ namespace sandbox_databases
         {
             if (textBox1_obl.Text == "")
             {
-                textBox1_obl.Text = "Область";
+                textBox1_obl.Text = "id документа";
                 textBox1_obl.ForeColor = Color.Gray;
             }
         }
-
-       
-
-        private void textBox1_gor_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_gor.Text == "Населенный пункт")
-            {
-                textBox1_gor.Text = "";
-                textBox1_gor.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_gor_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_gor.Text == "")
-            {
-                textBox1_gor.Text = "Населенный пункт";
-                textBox1_gor.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_ul_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_ul.Text == "Улица")
-            {
-                textBox1_ul.Text = "";
-                textBox1_ul.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_ul_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_ul.Text == "")
-            {
-                textBox1_ul.Text = "Улица";
-                textBox1_ul.ForeColor = Color.Gray;
-            }
-        }
-
-        
 
         private void label1_MouseEnter(object sender, EventArgs e)
         {
@@ -163,45 +118,36 @@ namespace sandbox_databases
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (textBox1_ind.Text.Contains(' ') || textBox1_obl.Text.Contains(' ')
-                || textBox1_rai.Text.Contains(' ') || textBox1_gor.Text.Contains(' ')
-                 || textBox1_ul.Text.Contains(' ') || textBox1_dom.Text.Contains(' '))
+            DateTime dt1 = dateTimePicker1.Value;
+            DateTime dt2 = dateTimePicker2.Value;
+
+            if (textBox1_ind.Text.Contains(' ') || textBox1_obl.Text.Contains(' '))
             {
                 MessageBox.Show("Введите корректные значения");
                 return;
             }
             else
-            if (textBox1_ind.Text == "Индекс компании" || textBox1_obl.Text == "Область"
-                || textBox1_rai.Text == "Район" || textBox1_gor.Text == "Населенный пункт"
-                || textBox1_ul.Text == "Улица" || textBox1_dom.Text == "Дом")
+            if (textBox1_ind.Text == "id сотрудника" || textBox1_obl.Text == "id документа")
             {
                 MessageBox.Show("Введите данные");
                 return;
             }
-            
-            if (isUserExists())
-                return;
 
-            if (isExists())
-                return;
 
             DB db = new DB();
 
-            MySqlCommand command1 = new MySqlCommand("INSERT INTO adres " +
-                "SET `Индекс` = @ind, `Область` = @obl, `Район` = @rai, `Наименование места` = @mest, `Улица` = @ul, `Дом` = @dom," +
-                " company_id = (SELECT id FROM company WHERE `id` = @id)", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `oborot`.`HISTORY` (`Дата_Получения`, `SOTRUDNIK_id`, `DOKUMENT_id`," +
+                " `Дата_Отправки`)" +
+                " VALUES (@otch, @name, @surname, @pol)", db.getConnection());
 
-            command1.Parameters.Add("@ind", MySqlDbType.VarChar).Value = textBox1_ind.Text;
-            command1.Parameters.Add("@obl", MySqlDbType.VarChar).Value = textBox1_obl.Text;
-            command1.Parameters.Add("@rai", MySqlDbType.VarChar).Value = textBox1_rai.Text;
-            command1.Parameters.Add("@mest", MySqlDbType.VarChar).Value = textBox1_gor.Text;
-            command1.Parameters.Add("@ul", MySqlDbType.VarChar).Value = textBox1_ul.Text;
-            command1.Parameters.Add("@dom", MySqlDbType.VarChar).Value = textBox1_dom.Text;
-            command1.Parameters.Add("@id", MySqlDbType.VarChar).Value = textBox1.Text;
-
+            command.Parameters.Add("@name", MySqlDbType.VarChar).Value = textBox1_ind.Text;
+            command.Parameters.Add("@surname", MySqlDbType.VarChar).Value = textBox1_obl.Text;
+            command.Parameters.Add("@otch", MySqlDbType.Date).Value = dt1;
+            command.Parameters.Add("@pol", MySqlDbType.Date).Value = dt2;
+           
             db.openConnection();
 
-            if (command1.ExecuteNonQuery() == 1)
+            if (command.ExecuteNonQuery() == 1)
                 MessageBox.Show("Запись добавлена");
             else
                 MessageBox.Show("Запись не добавлена");
@@ -220,7 +166,7 @@ namespace sandbox_databases
             MySqlCommand command = new MySqlCommand("select * " +
                 "from company where id = @uL", db.getConnection());
 
-            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox1.Text;
+            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox1_ind.Text;
 
             adapter.SelectCommand = command;
             adapter.Fill(table);
@@ -248,7 +194,7 @@ namespace sandbox_databases
             MySqlCommand command = new MySqlCommand("select * " +
                 "from adres where company_id = @uL", db.getConnection());
 
-            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox1.Text;
+            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox1_ind.Text;
 
             adapter.SelectCommand = command;
             adapter.Fill(table);
