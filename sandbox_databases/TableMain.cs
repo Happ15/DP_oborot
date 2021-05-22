@@ -297,7 +297,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from DOKUMENT", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select id, Дата, Текущий_статус, Правки_и_изменения, TIP_DOKUMENTA_id  from DOKUMENT", db.getConnection());
 
             db.openConnection();
 

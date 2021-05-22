@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -291,6 +292,30 @@ namespace sandbox_databases
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            byte[] result = null;
+            FileStream fileStream = File.OpenRead(Directory.GetCurrentDirectory() + @"\Testing\Test.docx");
+            BinaryReader binaryReader = new BinaryReader(fileStream);
+            int count = (int)fileStream.Length;
+            result = binaryReader.ReadBytes(count);
+
+            DB db = new DB();
+
+            DataTable table = new DataTable();
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand("INSERT INTO DOKUMENT (`Дата`, `Содержание`, `Текущий_статус`, `TIP_DOKUMENTA_id`) VALUES ('2021-05-20', @Content, 'TEST.docx', '1')", db.getConnection());
+            command.Parameters.AddWithValue("@Content", result);
+
+            db.openConnection();
+
+            int numberOfUpdatedItems = command.ExecuteNonQuery();
+
+            db.closeConnection();
         }
     }
 }
