@@ -17,23 +17,9 @@ namespace sandbox_databases
         {
             InitializeComponent();
 
-            textBox1_name.Text = "Наименование компании";
+            textBox1_name.Text = "Наименование подразделения";
             textBox1_name.ForeColor = Color.Gray;
 
-            textBox1_mail.Text = "Почта";
-            textBox1_mail.ForeColor = Color.Gray;
-
-            textBox1_OGRN.Text = "ОГРН";
-            textBox1_OGRN.ForeColor = Color.Gray;
-
-            textBox1_INN.Text = "ИНН";
-            textBox1_INN.ForeColor = Color.Gray;
-
-            textBox1_KPP.Text = "КПП";
-            textBox1_KPP.ForeColor = Color.Gray;
-
-            textBox1_direct.Text = "id директора";
-            textBox1_direct.ForeColor = Color.Gray;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -92,17 +78,13 @@ namespace sandbox_databases
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (textBox1_name.Text.Contains(' ') || textBox1_mail.Text.Contains(' ')
-                || textBox1_OGRN.Text.Contains(' ') || textBox1_INN.Text.Contains(' ')
-                 || textBox1_KPP.Text.Contains(' ') || textBox1_direct.Text.Contains(' '))
+            if (textBox1_name.Text.Contains(' '))
             {
                 MessageBox.Show("Введите корректные значения");
                 return;
             }
             else
-            if (textBox1_name.Text == "Наименование компании" || textBox1_mail.Text == "Почта"
-                || textBox1_OGRN.Text == "ОГРН" || textBox1_INN.Text == "ИНН"
-                || textBox1_KPP.Text == "КПП" || textBox1_direct.Text == "id директора")
+            if (textBox1_name.Text == "Наименование подразделения")
             {
                 MessageBox.Show("Введите данные");
                 return;
@@ -112,23 +94,23 @@ namespace sandbox_databases
                 return;
 
             DB db = new DB();
-            MySqlCommand command = new MySqlCommand("INSERT INTO `holding_2`.`company` (`Наименование`, `E-mail`, `ОГРН`, `ИНН`" +
-                ", `КПП`, `gen_direct_id`) VALUES (@name, @mail, @ogrn, @inn, @kpp, @direct)", db.getConnection());
+            MySqlCommand command = new MySqlCommand("INSERT INTO `oborot`.`PODRAZDELENIE` (`Наименование_подразделения`) VALUES (@name)", db.getConnection());
 
-            MySqlCommand command1 = new MySqlCommand("INSERT INTO company " +
-                "SET `Наименование` = @name, `E-mail` = @mail, `ОГРН` = @ogrn, `ИНН` = @inn, `КПП` = @kpp," +
-                " gen_direct_id = (SELECT id FROM gen_direct WHERE `id` = @direct)", db.getConnection());
+            MySqlCommand command1 = new MySqlCommand("INSERT INTO PODRAZDELENIE " +
+                "SET `Наименование_подразделения` = @name)", db.getConnection());
 
-            command1.Parameters.Add("@name", MySqlDbType.VarChar).Value = textBox1_name.Text;
-            command1.Parameters.Add("@mail", MySqlDbType.VarChar).Value = textBox1_mail.Text;
-            command1.Parameters.Add("@ogrn", MySqlDbType.VarChar).Value = textBox1_OGRN.Text;
-            command1.Parameters.Add("@inn", MySqlDbType.VarChar).Value = textBox1_INN.Text;
-            command1.Parameters.Add("@kpp", MySqlDbType.VarChar).Value = textBox1_KPP.Text;
-            command1.Parameters.Add("@direct", MySqlDbType.VarChar).Value = textBox1_direct.Text;
+
+            //Может пригодится
+            //MySqlCommand command1 = new MySqlCommand("INSERT INTO company " +
+            //    "SET `Наименование` = @name, `E-mail` = @mail, `ОГРН` = @ogrn, `ИНН` = @inn, `КПП` = @kpp," +
+            //    " gen_direct_id = (SELECT id FROM gen_direct WHERE `id` = @direct)", db.getConnection());
+
+
+            command.Parameters.Add("@name", MySqlDbType.VarChar).Value = textBox1_name.Text;
 
             db.openConnection();
 
-            if (command1.ExecuteNonQuery() == 1)
+            if (command.ExecuteNonQuery() == 1)
                 MessageBox.Show("Запись добавлена");
             else
                 MessageBox.Show("Запись не добавлена");
@@ -144,20 +126,16 @@ namespace sandbox_databases
 
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            MySqlCommand command = new MySqlCommand("select * from company where `Наименование` = @uL AND `ОГРН` = @ogrn AND" +
-                " `ИНН` = @inn AND `КПП` = @kpp", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select * from PODRAZDELENIE where `Наименование_подразделения` = @uL", db.getConnection());
 
             command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox1_name.Text;
-            command.Parameters.Add("@ogrn", MySqlDbType.VarChar).Value = textBox1_OGRN.Text;
-            command.Parameters.Add("@inn", MySqlDbType.VarChar).Value = textBox1_INN.Text;
-            command.Parameters.Add("@kpp", MySqlDbType.VarChar).Value = textBox1_KPP.Text;
-
+           
             adapter.SelectCommand = command;
             adapter.Fill(table);
 
             if (table.Rows.Count > 0)
             {
-                MessageBox.Show("Имя занято");
+                MessageBox.Show("Подразделение с таким наименованием уже существует");
                 return true;
             }
             else
@@ -166,7 +144,7 @@ namespace sandbox_databases
 
         private void textBox1_name_Enter(object sender, EventArgs e)
         {
-            if (textBox1_name.Text == "Наименование компании")
+            if (textBox1_name.Text == "Наименование подразделения")
             {
                 textBox1_name.Text = "";
                 textBox1_name.ForeColor = Color.Black;
@@ -177,99 +155,10 @@ namespace sandbox_databases
         {
             if (textBox1_name.Text == "")
             {
-                textBox1_name.Text = "Наименование компании";
+                textBox1_name.Text = "Наименование подразделения";
                 textBox1_name.ForeColor = Color.Gray;
             }
         }
 
-        private void textBox1_mail_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_mail.Text == "Почта")
-            {
-                textBox1_mail.Text = "";
-                textBox1_mail.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_mail_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_mail.Text == "")
-            {
-                textBox1_mail.Text = "Почта";
-                textBox1_mail.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_OGRN_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_OGRN.Text == "ОГРН")
-            {
-                textBox1_OGRN.Text = "";
-                textBox1_OGRN.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_OGRN_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_OGRN.Text == "")
-            {
-                textBox1_OGRN.Text = "ОГРН";
-                textBox1_OGRN.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_INN_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_INN.Text == "ИНН")
-            {
-                textBox1_INN.Text = "";
-                textBox1_INN.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_INN_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_INN.Text == "")
-            {
-                textBox1_INN.Text = "ИНН";
-                textBox1_INN.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_KPP_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_KPP.Text == "КПП")
-            {
-                textBox1_KPP.Text = "";
-                textBox1_KPP.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_KPP_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_KPP.Text == "")
-            {
-                textBox1_KPP.Text = "КПП";
-                textBox1_KPP.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_direct_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_direct.Text == "id директора")
-            {
-                textBox1_direct.Text = "";
-                textBox1_direct.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_direct_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_direct.Text == "")
-            {
-                textBox1_direct.Text = "id директора";
-                textBox1_direct.ForeColor = Color.Gray;
-            }
-        }
     }
 }
