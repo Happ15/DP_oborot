@@ -17,26 +17,18 @@ namespace sandbox_databases
         {
             InitializeComponent();
 
-            textBox1_ind.Text = "Индекс компании";
+            textBox1_ind.Text = "Дата получения";
             textBox1_ind.ForeColor = Color.Gray;
 
-            textBox1_obl.Text = "Область";
+            textBox1_obl.Text = "id сотрудника";
             textBox1_obl.ForeColor = Color.Gray;
 
-            textBox1_rai.Text = "Район";
-            textBox1_rai.ForeColor = Color.Gray;
-
-            textBox1_gor.Text = "Населенный пункт";
+            textBox1_gor.Text = "id документа";
             textBox1_gor.ForeColor = Color.Gray;
 
-            textBox1_ul.Text = "Улица";
+            textBox1_ul.Text = "Дата отправки";
             textBox1_ul.ForeColor = Color.Gray;
 
-            textBox1_dom.Text = "Дом";
-            textBox1_dom.ForeColor = Color.Gray;
-
-            textBox1.Text = "id компании";
-            textBox1.ForeColor = Color.Gray;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -109,23 +101,7 @@ namespace sandbox_databases
             }
         }
 
-        private void textBox1_rai_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_rai.Text == "Район")
-            {
-                textBox1_rai.Text = "";
-                textBox1_rai.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_rai_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_rai.Text == "")
-            {
-                textBox1_rai.Text = "Район";
-                textBox1_rai.ForeColor = Color.Gray;
-            }
-        }
+       
 
         private void textBox1_gor_Enter(object sender, EventArgs e)
         {
@@ -163,23 +139,7 @@ namespace sandbox_databases
             }
         }
 
-        private void textBox1_dom_Enter(object sender, EventArgs e)
-        {
-            if (textBox1_dom.Text == "Дом")
-            {
-                textBox1_dom.Text = "";
-                textBox1_dom.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_dom_Leave(object sender, EventArgs e)
-        {
-            if (textBox1_dom.Text == "")
-            {
-                textBox1_dom.Text = "Дом";
-                textBox1_dom.ForeColor = Color.Gray;
-            }
-        }
+        
 
         private void label1_MouseEnter(object sender, EventArgs e)
         {
@@ -302,22 +262,6 @@ namespace sandbox_databases
                 return false;
         }
 
-        private void textBox1_Enter(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "id компании")
-            {
-                textBox1.Text = "";
-                textBox1.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox1_Leave(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "id компании")
-            {
-                textBox1.Text = "id компании";
-                textBox1.ForeColor = Color.Gray;
-            }
-        }
+        
     }
 }
