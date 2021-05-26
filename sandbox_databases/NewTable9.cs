@@ -18,13 +18,10 @@ namespace sandbox_databases
         {
             InitializeComponent();
 
-            textBox3.Text = "Время";
-            textBox3.ForeColor = Color.Gray;
-
-            textBox1.Text = "id пользователя";
+            textBox1.Text = "Правки и изменения";
             textBox1.ForeColor = Color.Gray;
 
-            textBox2.Text = "id документа";
+            textBox2.Text = "Статус документа";
             textBox2.ForeColor = Color.Gray;
         }
 
@@ -84,7 +81,7 @@ namespace sandbox_databases
 
         private void textBox2_Enter(object sender, EventArgs e)
         {
-            if (textBox2.Text == "id документа")
+            if (textBox2.Text == "Статус документа")
             {
                 textBox2.Text = "";
                 textBox2.ForeColor = Color.Black;
@@ -95,14 +92,14 @@ namespace sandbox_databases
         {
             if (textBox2.Text == "")
             {
-                textBox2.Text = "id документа";
+                textBox2.Text = "Статус документа";
                 textBox2.ForeColor = Color.Gray;
             }
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
         {
-            if (textBox1.Text == "id пользователя")
+            if (textBox1.Text == "Правки и изменения")
             {
                 textBox1.Text = "";
                 textBox1.ForeColor = Color.Black;
@@ -113,73 +110,48 @@ namespace sandbox_databases
         {
             if (textBox1.Text == "")
             {
-                textBox1.Text = "id пользователя";
+                textBox1.Text = "Правки и изменения";
                 textBox1.ForeColor = Color.Gray;
             }
         }
 
-        private void textBox3_Enter(object sender, EventArgs e)
-        {
-            if (textBox3.Text == "Время")
-            {
-                textBox3.Text = "";
-                textBox3.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox3_Leave(object sender, EventArgs e)
-        {
-            if (textBox3.Text == "")
-            {
-                textBox3.Text = "Время";
-                textBox3.ForeColor = Color.Gray;
-            }
-        }
+        
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            flagTbl = "work_user_doc";
-            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' ') || textBox3.Text.Contains(' '))
+            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' '))
             {
                 MessageBox.Show("Введите корректные значения");
                 return;
             }
             else
-            if (textBox1.Text == "id пользователя" || textBox2.Text == "id документа" || textBox3.Text == "Время")
+            if (textBox1.Text == "Правки и изменения" || textBox2.Text == "Статус документа")
             {
                 MessageBox.Show("Введите данные");
                 return;
             }
+            DateTime dt = DateTime.Now;
+            string curDate = dt.ToShortDateString();
 
-            if (isDocExists())
-                return;
-
-            if (isExists())
-                return;
-
-            if (isUserExists())
-                return;
-
-            if (isExistsDoc())
-                return;
-
-            if (isExistsUser())
-                return;
 
             DB db = new DB();
-            MySqlCommand command1 = new MySqlCommand("INSERT INTO gotov_doc " +
-                "SET `Время` = @time," +
-                " users_id = (SELECT users_id FROM work_user_doc WHERE `users_id` = @idu)," +
-                " doc_id = (SELECT doc_id FROM work_user_doc WHERE `doc_id` = @idd)", db.getConnection());
+            MySqlCommand command1 = new MySqlCommand("UPDATE DOKUMENT " +
+                "SET `Дата` = CURDATE()," +
+                " Текущий_статус = @stat," +
+                " Правки_и_изменения = @prav " +
+                "where id = @doc_id", db.getConnection());
 
-            MySqlCommand command2 = new MySqlCommand("DELETE FROM " + flagTbl +
-                " WHERE doc_id = (SELECT id FROM doc WHERE `id` = @idv)", db.getConnection());
+            MySqlCommand command2 = new MySqlCommand("UPDATE HISTORY " +
+                "SET `Дата_Отправки` = CURDATE()" +
+                " WHERE DOKUMENT_id = (SELECT id FROM DOKUMENT WHERE `id` = @idv) AND `Дата_Отправки` IS NULL", db.getConnection());
 
-            command1.Parameters.Add("@time", MySqlDbType.VarChar).Value = textBox3.Text;
-            command1.Parameters.Add("@idu", MySqlDbType.VarChar).Value = textBox1.Text;
-            command1.Parameters.Add("@idd", MySqlDbType.VarChar).Value = textBox2.Text;
+            command1.Parameters.Add("@prav", MySqlDbType.VarChar).Value = textBox1.Text;
+            command1.Parameters.Add("@stat", MySqlDbType.VarChar).Value = textBox2.Text;
+            //command1.Parameters.Add("@time", MySqlDbType.Date).Value = curDate;
+            command1.Parameters.Add("@doc_id", MySqlDbType.Int32).Value = id_doc.Value;
 
-            command2.Parameters.Add("@idv", MySqlDbType.VarChar).Value = textBox2.Text;
+            //command2.Parameters.Add("@time", MySqlDbType.Date).Value = curDate;
+            command2.Parameters.Add("@idv", MySqlDbType.VarChar).Value = id_doc.Value;
 
             db.openConnection();
 
@@ -325,6 +297,26 @@ namespace sandbox_databases
             }
             else
                 return false;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +46,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942" />
@@ -86,6 +110,12 @@
     </Compile>
     <Compile Include="NewTable1.Designer.cs">
       <DependentUpon>NewTable1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewTable10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewTable10.Designer.cs">
+      <DependentUpon>NewTable10.cs</DependentUpon>
     </Compile>
     <Compile Include="NewTable2.cs">
       <SubType>Form</SubType>
@@ -143,6 +173,12 @@
     <Compile Include="RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RukovosShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RukovosShow.Designer.cs">
+      <DependentUpon>RukovosShow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShowUsers.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +220,9 @@
     <EmbeddedResource Include="NewTable1.resx">
       <DependentUpon>NewTable1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NewTable10.resx">
+      <DependentUpon>NewTable10.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NewTable2.resx">
       <DependentUpon>NewTable2.cs</DependentUpon>
     </EmbeddedResource>
@@ -220,6 +259,9 @@
     <EmbeddedResource Include="RegisterForm.resx">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RukovosShow.resx">
+      <DependentUpon>RukovosShow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ShowUsers.resx">
       <DependentUpon>ShowUsers.cs</DependentUpon>
     </EmbeddedResource>
@@ -243,6 +285,7 @@
     <None Include="holdingDataSet.xss">
       <DependentUpon>holdingDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -266,6 +309,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -43,4 +43,16 @@ namespace sandbox_databases
         public static string Value { get; set; }
 
     }
+
+    static class log
+    {
+        public static string Value { get; set; }
+
+    }
+
+    static class id_doc
+    {
+        public static int Value { get; set; }
+
+    }
 }

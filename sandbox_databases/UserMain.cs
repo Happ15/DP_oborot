@@ -9,6 +9,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+
 
 namespace sandbox_databases
 {
@@ -20,24 +22,14 @@ namespace sandbox_databases
         string flagTblcomp = "0";
         DataSet ds = new DataSet();
         string slka1 = "";
+        
+
         public UserMain()
         {
             InitializeComponent();
+            label5.Text = logos.Value;
 
-            button3.Visible = false;
-            button5.Visible = false;
 
-            if (logos.Value == "office")
-            {
-                button6.Visible = true;
-                label5.Text = login.Value;
-            }
-            else
-            if (logos.Value == "company")
-            {
-                button6.Visible = false;
-                label5.Text = login.Value;
-            }
         }
 
         Point lastPoint;
@@ -107,19 +99,6 @@ namespace sandbox_databases
         private void button1_Click(object sender, EventArgs e)
         {
             obnovTbl = "1";
-            linkLabel1.Text = "";
-            if (logos.Value == "office")
-            {
-                button5.Visible = false;
-                button3.Visible = false;
-                flagTblcomp = "0";
-            }
-            else
-            if (logos.Value == "company")
-            {
-                button5.Visible = false;
-                button3.Visible = true;
-            }
             
 
             flagTbl = "0";
@@ -131,7 +110,13 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select * from doc where not EXISTS(select * from work_user_doc where doc_id = id) and not EXISTS(select * from gotov_doc where doc_id = id)", db.getConnection());
+            MySqlCommand command = new MySqlCommand("select `DOKUMENT`.`id`, `Дата`, `Дата_Получения`, `Текущий_статус`, `Правки_и_изменения`, `TIP_DOKUMENTA_id`" +
+                " from DOKUMENT join `HISTORY` on DOKUMENT_id = DOKUMENT.id where" +
+                " SOTRUDNIK_id = (select SOTRUDNIK.id from SOTRUDNIK join VXOD on SOTRUDNIK_id = SOTRUDNIK.id where login = @log) AND Дата_Отправки IS NULL", db.getConnection());
+
+            //not EXISTS(select* from work_user_doc where doc_id = id) and not EXISTS(select * from gotov_doc where doc_id = id)
+
+            command.Parameters.Add("@log", MySqlDbType.VarChar).Value = login.Value;
 
             db.openConnection();
 
@@ -148,15 +133,12 @@ namespace sandbox_databases
             if (logos.Value == "office")
             {
                 button5.Visible = false;
-                button3.Visible = false;
                 flagTblcomp = "1";
-                linkLabel1.Text = "";
             }
             else
            if (logos.Value == "company")
             {
                 button5.Visible = true;
-                button3.Visible = false;
             }
 
             if (logos.Value == "company")
@@ -212,11 +194,8 @@ namespace sandbox_databases
         {
             obnovTbl = "3";
             button5.Visible = false;
-            button3.Visible = false;
             flagTbl = "0";
-            linkLabel1.Text = "";
-            if (logos.Value == "company")
-            {
+            
                 ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
 
@@ -225,33 +204,11 @@ namespace sandbox_databases
                 dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dataGridView1.AllowUserToAddRows = false;
 
-                MySqlCommand command = new MySqlCommand("select * from gotov_doc where users_id = (select id from users where логин = @uL)", db.getConnection());
+                MySqlCommand command = new MySqlCommand("select `DOKUMENT`.`id`, `Дата`, `Дата_Получения`, `Текущий_статус`, `Правки_и_изменения`, `TIP_DOKUMENTA_id`" +
+                " from DOKUMENT join `HISTORY` on DOKUMENT_id = DOKUMENT.id where" +
+                " SOTRUDNIK_id = (select SOTRUDNIK.id from SOTRUDNIK join VXOD on SOTRUDNIK_id = SOTRUDNIK.id where login = @log) AND Дата_Отправки > 0", db.getConnection());
 
-                command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login.Value;
-
-                db.openConnection();
-
-                adapter.SelectCommand = command;
-                adapter.Fill(ds);
-                dataGridView1.DataSource = ds.Tables[0];
-
-                db.closeConnection();
-            }
-            else
-            if(logos.Value == "office")
-            {
-                flagTblcomp = "2";
-                ds.Reset();
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-                DB db = new DB();
-
-                dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dataGridView1.AllowUserToAddRows = false;
-
-                MySqlCommand command = new MySqlCommand("select * from gotov_doc", db.getConnection());
-
-                command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login.Value;
+                command.Parameters.Add("@log", MySqlDbType.VarChar).Value = login.Value;
 
                 db.openConnection();
 
@@ -260,7 +217,7 @@ namespace sandbox_databases
                 dataGridView1.DataSource = ds.Tables[0];
 
                 db.closeConnection();
-            }
+            
                 
         }
 
@@ -314,7 +271,6 @@ namespace sandbox_databases
 
             db.closeConnection();
 
-            linkLabel1.Text = slka1;
         }
 
         private void button1_Enter(object sender, EventArgs e)
@@ -329,35 +285,45 @@ namespace sandbox_databases
 
         private void button5_Click(object sender, EventArgs e)
         {
-            flagTbl = "0";
             string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
             int id = int.Parse(ids);
 
-            DateTime date = DateTime.Now;
+            id_doc.Value = id;
 
-            DB db = new DB();
-            MySqlCommand command = new MySqlCommand("DELETE FROM work_user_doc "  +
-                " WHERE `doc_id` = @idx", db.getConnection());
+            this.Hide();
+            NewTable9 NewTable = new NewTable9();
+            NewTable.Show();
 
-            MySqlCommand command1 = new MySqlCommand("INSERT INTO gotov_doc " +
-                "SET `Время` = @time," +
-                " users_id = (SELECT id FROM users WHERE `Логин` = @idu)," +
-                " doc_id = (SELECT id FROM doc WHERE `id` = @idd)", db.getConnection());
 
-            command.Parameters.Add("@idx", MySqlDbType.Int32).Value = id;
+            //flagTbl = "0";
+            //string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+            //int id = int.Parse(ids);
 
-            command1.Parameters.Add("@time", MySqlDbType.DateTime).Value = date;
-            command1.Parameters.Add("@idu", MySqlDbType.VarChar).Value = login.Value;
-            command1.Parameters.Add("@idd", MySqlDbType.Int32).Value = id;
+            //DateTime date = DateTime.Now;
 
-            db.openConnection();
+            //DB db = new DB();
+            //MySqlCommand command = new MySqlCommand("DELETE FROM work_user_doc "  +
+            //    " WHERE `doc_id` = @idx", db.getConnection());
 
-            if (command.ExecuteNonQuery() == 1 && command1.ExecuteNonQuery() == 1)
-                MessageBox.Show("Готово");
-            else
-                MessageBox.Show("Не готово");
+            //MySqlCommand command1 = new MySqlCommand("INSERT INTO gotov_doc " +
+            //    "SET `Время` = @time," +
+            //    " users_id = (SELECT id FROM users WHERE `Логин` = @idu)," +
+            //    " doc_id = (SELECT id FROM doc WHERE `id` = @idd)", db.getConnection());
 
-            db.closeConnection();
+            //command.Parameters.Add("@idx", MySqlDbType.Int32).Value = id;
+
+            //command1.Parameters.Add("@time", MySqlDbType.DateTime).Value = date;
+            //command1.Parameters.Add("@idu", MySqlDbType.VarChar).Value = login.Value;
+            //command1.Parameters.Add("@idd", MySqlDbType.Int32).Value = id;
+
+            //db.openConnection();
+
+            //if (command.ExecuteNonQuery() == 1 && command1.ExecuteNonQuery() == 1)
+            //    MessageBox.Show("Готово");
+            //else
+            //    MessageBox.Show("Не готово");
+
+            //db.closeConnection();
         }
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -372,62 +338,56 @@ namespace sandbox_databases
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(linkLabel1.Text);
         }
 
         private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
-            if(flagTbl == "1")
-            {
-                string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-                int id = int.Parse(ids);
+                //string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+                //int id = int.Parse(ids);
 
-                DB db = new DB();
+                //Process.Start(@"C:\Users\danil\source\repos\sandbox_databases\sandbox_databases\bin\Debug\Testing\" + id + ".docx");
 
-                MySqlDataReader reader;
 
-                MySqlCommand slka = new MySqlCommand("select Ссылка from `doc` where id = @uL", db.getConnection());
+                //DB db = new DB();
 
-                slka.Parameters.Add("@uL", MySqlDbType.Int32).Value = id;
+                //MySqlDataReader reader;
 
-                db.openConnection();
+                //MySqlCommand slka = new MySqlCommand("select Ссылка from `doc` where id = @uL", db.getConnection());
 
-                reader = slka.ExecuteReader();
-                while (reader.Read())
-                {
-                    slka1 = reader["Ссылка"].ToString();
-                }
+                //slka.Parameters.Add("@uL", MySqlDbType.Int32).Value = id;
 
-                db.closeConnection();
+                //db.openConnection();
 
-                linkLabel1.Text = slka1;
-            }
+                //reader = slka.ExecuteReader();
+                //while (reader.Read())
+                //{
+                //    slka1 = reader["Ссылка"].ToString();
+                //}
 
-            if (flagTblcomp == "2")
-            {
-                string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-                int id = int.Parse(ids);
+                //db.closeConnection();
 
-                DB db = new DB();
+            
+                //string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+                //int id = int.Parse(ids);
 
-                MySqlDataReader reader;
+                //DB db = new DB();
 
-                MySqlCommand slka = new MySqlCommand("select Ссылка from `doc` where id = @uL", db.getConnection());
+                //MySqlDataReader reader;
 
-                slka.Parameters.Add("@uL", MySqlDbType.Int32).Value = id;
+                //MySqlCommand slka = new MySqlCommand("select Ссылка from `doc` where id = @uL", db.getConnection());
 
-                db.openConnection();
+                //slka.Parameters.Add("@uL", MySqlDbType.Int32).Value = id;
 
-                reader = slka.ExecuteReader();
-                while (reader.Read())
-                {
-                    slka1 = reader["Ссылка"].ToString();
-                }
+                //db.openConnection();
 
-                db.closeConnection();
+                //reader = slka.ExecuteReader();
+                //while (reader.Read())
+                //{
+                //    slka1 = reader["Ссылка"].ToString();
+                //}
 
-                linkLabel1.Text = slka1;
-            }
+                //db.closeConnection();
+
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -442,18 +402,15 @@ namespace sandbox_databases
         {
             if (obnovTbl == "1")
             {
-                linkLabel1.Text = "";
                 if (logos.Value == "office")
                 {
                     button5.Visible = false;
-                    button3.Visible = false;
                     flagTblcomp = "0";
                 }
                 else
                 if (logos.Value == "company")
                 {
                     button5.Visible = false;
-                    button3.Visible = true;
                 }
 
 
@@ -482,15 +439,12 @@ namespace sandbox_databases
                 if (logos.Value == "office")
                 {
                     button5.Visible = false;
-                    button3.Visible = false;
                     flagTblcomp = "0";
-                    linkLabel1.Text = "";
                 }
                 else
            if (logos.Value == "company")
                 {
                     button5.Visible = true;
-                    button3.Visible = false;
                 }
 
                 if (logos.Value == "company")
@@ -544,9 +498,7 @@ namespace sandbox_databases
             if (obnovTbl == "3")
             {
                 button5.Visible = false;
-                button3.Visible = false;
                 flagTbl = "0";
-                linkLabel1.Text = "";
                 if (logos.Value == "company")
                 {
                     ds.Reset();
@@ -611,7 +563,41 @@ namespace sandbox_databases
             label7.BackColor = Color.Transparent;
         }
 
+        private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+            int id = int.Parse(ids);
+
+            Process.Start(@"C:\Users\danil\source\repos\sandbox_databases\sandbox_databases\bin\Debug\Testing\" + id + ".docx");
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void UserMain_Load(object sender, EventArgs e)
         {
 
         }

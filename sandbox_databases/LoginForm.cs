@@ -19,6 +19,7 @@ namespace sandbox_databases
         DateTime date1 = DateTime.Now;
         string date = "";
         internal string categoryUser = "";
+
         public Form_auth()
         {
             InitializeComponent();
@@ -80,10 +81,7 @@ namespace sandbox_databases
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string loginUser = textBox_login.Text;
-            string passUser = textBox_pass.Text;
             login.Value = textBox_login.Text;
-
             
 
             DB db = new DB();
@@ -94,14 +92,18 @@ namespace sandbox_databases
 
             MySqlDataReader reader;
 
+            MySqlDataReader reader1;
+
             MySqlCommand command = new MySqlCommand("select * from `vxod` where login = @uL AND password = @uP", db.getConnection());
             MySqlCommand command_category = new MySqlCommand("select наименование_должности from sotrudnik join dolznost on DOLZNOST_id = dolznost.id join VXOD on SOTRUDNIK_id = SOTRUDNIK.id where login = @uL", db.getConnection());
+            MySqlCommand command_name = new MySqlCommand("select имя from `SOTRUDNIK` join VXOD on SOTRUDNIK_id = SOTRUDNIK.id where login = @uL", db.getConnection());
 
-            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = loginUser;
-            command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = passUser;
+            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox_login.Text;
+            command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = textBox_pass.Text;
 
-            command_category.Parameters.Add("@uL", MySqlDbType.VarChar).Value = loginUser;
-            command_category.Parameters.Add("@uP", MySqlDbType.VarChar).Value = passUser;
+            command_category.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox_login.Text;
+
+            command_name.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox_login.Text;
 
             db.openConnection();
 
@@ -114,8 +116,17 @@ namespace sandbox_databases
                 categoryUser = reader["наименование_должности"].ToString();
             }
 
-            
-            
+            db.closeConnection();
+
+            db.openConnection();
+
+            reader1 = command_name.ExecuteReader();
+            while (reader1.Read())
+            {
+                logos.Value = reader1["имя"].ToString();
+            }
+
+
             if (table.Rows.Count > 0 && categoryUser == "admin")
             {
                 this.Hide();
@@ -125,17 +136,15 @@ namespace sandbox_databases
             else
             if (table.Rows.Count > 0 && categoryUser == "rukovoditel")
             {
-                logos.Value = categoryUser;
                 this.Hide();
-                UserMain UserMain = new UserMain();
-                
-                UserMain.Show();
+                RukovosShow RukovosShow = new RukovosShow();
+
+                RukovosShow.Show();
                 
             }
             else
             if (table.Rows.Count > 0 && categoryUser == "sotrudnik")
             {
-                logos.Value = categoryUser;
                 this.Hide();
                 UserMain UserMain = new UserMain();
                 
