@@ -86,7 +86,7 @@
             this.buttonRegister.Location = new System.Drawing.Point(13, 342);
             this.buttonRegister.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRegister.Name = "buttonRegister";
-            this.buttonRegister.Size = new System.Drawing.Size(233, 52);
+            this.buttonRegister.Size = new System.Drawing.Size(334, 52);
             this.buttonRegister.TabIndex = 39;
             this.buttonRegister.Text = "Добавить";
             this.buttonRegister.UseVisualStyleBackColor = true;
@@ -185,11 +185,11 @@
             // button1
             // 
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Font = new System.Drawing.Font("Comic Sans MS", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(261, 342);
+            this.button1.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(13, 282);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(87, 52);
+            this.button1.Size = new System.Drawing.Size(334, 52);
             this.button1.TabIndex = 46;
             this.button1.Text = "Выбрать файл";
             this.button1.UseVisualStyleBackColor = true;

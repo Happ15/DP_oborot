@@ -28,7 +28,7 @@ namespace sandbox_databases
         {
             InitializeComponent();
             label5.Text = logos.Value;
-
+            button5.Visible = false;
 
         }
 
@@ -99,7 +99,7 @@ namespace sandbox_databases
         private void button1_Click(object sender, EventArgs e)
         {
             obnovTbl = "1";
-            
+            button5.Visible = true;
 
             flagTbl = "0";
             ds.Reset();
@@ -110,7 +110,7 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select `DOKUMENT`.`id`, `Дата`, `Дата_Получения`, `Текущий_статус`, `Правки_и_изменения`, `TIP_DOKUMENTA_id`" +
+            MySqlCommand command = new MySqlCommand("select `DOKUMENT`.`id`, `Дата`, `Содержание`, `Дата_Получения`, `Текущий_статус`, `Правки_и_изменения`, `TIP_DOKUMENTA_id`" +
                 " from DOKUMENT join `HISTORY` on DOKUMENT_id = DOKUMENT.id where" +
                 " SOTRUDNIK_id = (select SOTRUDNIK.id from SOTRUDNIK join VXOD on SOTRUDNIK_id = SOTRUDNIK.id where login = @log) AND Дата_Отправки IS NULL", db.getConnection());
 
@@ -192,7 +192,7 @@ namespace sandbox_databases
 
         private void button4_Click(object sender, EventArgs e)
         {
-            obnovTbl = "3";
+            obnovTbl = "2";
             button5.Visible = false;
             flagTbl = "0";
             
@@ -401,156 +401,13 @@ namespace sandbox_databases
         private void label7_Click(object sender, EventArgs e)
         {
             if (obnovTbl == "1")
-            {
-                if (logos.Value == "office")
-                {
-                    button5.Visible = false;
-                    flagTblcomp = "0";
-                }
-                else
-                if (logos.Value == "company")
-                {
-                    button5.Visible = false;
-                }
-
-
-                flagTbl = "0";
-                ds.Reset();
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-                DB db = new DB();
-
-                dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                dataGridView1.AllowUserToAddRows = false;
-
-                MySqlCommand command = new MySqlCommand("select * from doc where not EXISTS(select * from work_user_doc where doc_id = id) and not EXISTS(select * from gotov_doc where doc_id = id)", db.getConnection());
-
-                db.openConnection();
-
-                adapter.SelectCommand = command;
-                adapter.Fill(ds);
-                dataGridView1.DataSource = ds.Tables[0];
-
-                db.closeConnection();
-            }
+                button1_Click(login.Value, e);
+            else if (obnovTbl == "2")
+                button1_Click(login.Value, e);
+            else if (obnovTbl == "0")
+                MessageBox.Show("Выберите таблицу");
             else
-            if (obnovTbl == "2")
-            {
-                if (logos.Value == "office")
-                {
-                    button5.Visible = false;
-                    flagTblcomp = "0";
-                }
-                else
-           if (logos.Value == "company")
-                {
-                    button5.Visible = true;
-                }
-
-                if (logos.Value == "company")
-                {
-                    flagTbl = "1";
-                    ds.Reset();
-                    MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-                    DB db = new DB();
-
-                    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                    dataGridView1.AllowUserToAddRows = false;
-
-                    MySqlCommand command = new MySqlCommand("select * from work_user_doc where users_id = (select id from users where логин = @uL)", db.getConnection());
-
-                    command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login.Value;
-
-                    db.openConnection();
-
-                    adapter.SelectCommand = command;
-                    adapter.Fill(ds);
-                    dataGridView1.DataSource = ds.Tables[0];
-
-                    db.closeConnection();
-                }
-                else
-               if (logos.Value == "office")
-                {
-                    ds.Reset();
-                    MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-                    DB db = new DB();
-
-                    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                    dataGridView1.AllowUserToAddRows = false;
-
-                    MySqlCommand command = new MySqlCommand("select * from work_user_doc", db.getConnection());
-
-                    command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login.Value;
-
-                    db.openConnection();
-
-                    adapter.SelectCommand = command;
-                    adapter.Fill(ds);
-                    dataGridView1.DataSource = ds.Tables[0];
-
-                    db.closeConnection();
-                }
-            }
-            else
-            if (obnovTbl == "3")
-            {
-                button5.Visible = false;
-                flagTbl = "0";
-                if (logos.Value == "company")
-                {
-                    ds.Reset();
-                    MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-                    DB db = new DB();
-
-                    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                    dataGridView1.AllowUserToAddRows = false;
-
-                    MySqlCommand command = new MySqlCommand("select * from gotov_doc where users_id = (select id from users where логин = @uL)", db.getConnection());
-
-                    command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login.Value;
-
-                    db.openConnection();
-
-                    adapter.SelectCommand = command;
-                    adapter.Fill(ds);
-                    dataGridView1.DataSource = ds.Tables[0];
-
-                    db.closeConnection();
-                }
-                else
-                if (logos.Value == "office")
-                {
-                    flagTblcomp = "1";
-                    ds.Reset();
-                    MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-                    DB db = new DB();
-
-                    dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                    dataGridView1.AllowUserToAddRows = false;
-
-                    MySqlCommand command = new MySqlCommand("select * from gotov_doc", db.getConnection());
-
-                    command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login.Value;
-
-                    db.openConnection();
-
-                    adapter.SelectCommand = command;
-                    adapter.Fill(ds);
-                    dataGridView1.DataSource = ds.Tables[0];
-
-                    db.closeConnection();
-                }
-            }
-            else
-            if (obnovTbl == "0")
-            {
-                MessageBox.Show("Выберите таблицу!");
-            }
+                MessageBox.Show("Ошибка");
         }
 
         private void label7_MouseEnter(object sender, EventArgs e)
@@ -565,10 +422,15 @@ namespace sandbox_databases
 
         private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            string ids = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
-            int id = int.Parse(ids);
+            if(FileEnd.Value == "")
+            {
+                MessageBox.Show("Директория не выбрана, обратитесь к администратору");
+                return;
+            }
+            string names = dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString();
+            
 
-            Process.Start(@"C:\Users\danil\source\repos\sandbox_databases\sandbox_databases\bin\Debug\Testing\" + id + ".docx");
+            Process.Start(FileEnd.Value + "\\" + names);
 
         }
 

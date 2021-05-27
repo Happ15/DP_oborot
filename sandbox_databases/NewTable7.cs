@@ -19,8 +19,7 @@ namespace sandbox_databases
         {
             InitializeComponent();
 
-            button1.Click += new EventHandler(button1_Click);
-
+            openFileDialog1.FileName = "";
             openFileDialog1.Title = "Выберите файл";
             openFileDialog1.Filter = "Документ Word (*.docx)|*.docx|Все файлы (*.*)|*.*|PDF (*.pdf)|*.pdf";
 
@@ -168,32 +167,35 @@ namespace sandbox_databases
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' ') || textBox3.Text.Contains(' '))
+            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' ') || textBox3.Text.Contains(' ') || openFileDialog1.FileName == "")
             {
                 MessageBox.Show("Введите корректные значения");
                 return;
             }
             else
-            if (textBox1.Text == "Статус документа" || textBox2.Text == "Правки и изменения" || textBox3.Text == "Тип документа")
+            if (textBox1.Text == "Статус документа" || textBox2.Text == "Правки и изменения" || textBox3.Text == "Тип документа" || openFileDialog1.FileName == "")
             {
                 MessageBox.Show("Введите данные");
                 return;
             }
 
-            if (isUserExists())
+            if (FileMove() == false)
+            {
+                MessageBox.Show("error");
                 return;
+            }
+                
 
-            if (isExists())
-                return;
 
             DB db = new DB();
-            MySqlCommand command1 = new MySqlCommand("INSERT INTO doc " +
-                "SET `Наименование` = @name, `Задача` = @zd, `Пояснение` = @po, `Ссылка` = @ss," +
-                " company_id = (SELECT id FROM company WHERE `id` = @id)", db.getConnection());
+            MySqlCommand command1 = new MySqlCommand("INSERT INTO DOKUMENT " +
+                "SET `Дата` = CURDATE(), `Содержание` = @name, `Текущий_статус` = @stat, `Правки_и_изменения` = @text," +
+                " TIP_DOKUMENTA_id = @tip_id", db.getConnection());
 
-            command1.Parameters.Add("@name", MySqlDbType.VarChar).Value = textBox1.Text;
-            command1.Parameters.Add("@zd", MySqlDbType.VarChar).Value = textBox3.Text;
-            command1.Parameters.Add("@po", MySqlDbType.VarChar).Value = textBox2.Text;
+            command1.Parameters.Add("@stat", MySqlDbType.VarChar).Value = textBox1.Text;
+            command1.Parameters.Add("@name", MySqlDbType.VarChar).Value = openFileDialog1.SafeFileName;
+            command1.Parameters.Add("@text", MySqlDbType.VarChar).Value = textBox2.Text;
+            command1.Parameters.Add("@tip_id", MySqlDbType.Int32).Value = textBox3.Text;
 
             db.openConnection();
 
@@ -205,31 +207,34 @@ namespace sandbox_databases
             db.closeConnection();
         }
 
-        public Boolean isExists()
+        public Boolean FileMove()
         {
-            DB db = new DB();
-
-            DataTable table = new DataTable();
-
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand("select * " +
-                "from company where id = @uL", db.getConnection());
-
-
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-
-            if (table.Rows.Count > 0)
+            if (openFileDialog1.FileName == "")
+                return false;
+            if (FileEnd.Value == "")
             {
+                MessageBox.Show("Директория не выбрана, обратитесь к администратору");
                 return false;
             }
-            else
+
+
+            FileInfo fileInfo = new FileInfo(openFileDialog1.FileName);
+            if(fileInfo.Exists)
             {
-                MessageBox.Show("Компания не существует");
+                fileInfo.CopyTo(FileEnd.Value + "\\" + openFileDialog1.SafeFileName);
+
                 return true;
             }
+            return false;
+        }
 
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // выход, если была нажата кнопка Отмена и прочие (кроме ОК)
+            if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
+            // всё. имя файла теперь хранится в openFileDialog1.FileName
+            MessageBox.Show("Выбран файл: " + openFileDialog1.FileName);
         }
 
         public Boolean isUserExists()
@@ -253,14 +258,6 @@ namespace sandbox_databases
             }
             else
                 return false;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // выход, если была нажата кнопка Отмена и прочие (кроме ОК)
-            if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
-            // всё. имя файла теперь хранится в openFileDialog1.FileName
-            MessageBox.Show("Выбран файл: " + openFileDialog1.FileName);
         }
     }
 }

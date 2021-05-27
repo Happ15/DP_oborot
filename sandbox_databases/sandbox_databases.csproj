@@ -88,6 +88,12 @@
     <Compile Include="DeleteUserForm.Designer.cs">
       <DependentUpon>DeleteUserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FolderTable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FolderTable.Designer.cs">
+      <DependentUpon>FolderTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="holdingDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -210,6 +216,9 @@
     </Compile>
     <EmbeddedResource Include="DeleteUserForm.resx">
       <DependentUpon>DeleteUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FolderTable.resx">
+      <DependentUpon>FolderTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>

@@ -44,11 +44,6 @@ namespace sandbox_databases
 
     }
 
-    static class log
-    {
-        public static string Value { get; set; }
-
-    }
 
     static class id_doc
     {
@@ -68,5 +63,15 @@ namespace sandbox_databases
         public static string Value { get; set; }
 
     }
+    static class FileEnd
+    {
+        public static string Value { get; set; }
 
+    }
+
+    static class FileNameEnd
+    {
+        public static string Value { get; set; }
+
+    }
 }

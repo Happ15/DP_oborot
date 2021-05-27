@@ -103,9 +103,9 @@ namespace sandbox_databases
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
 
-            MySqlCommand command = new MySqlCommand("select `DOKUMENT`.`id`, `Дата`, `Текущий_статус`, `Правки_и_изменения`, `Тип_Документа`" +
+            MySqlCommand command = new MySqlCommand("select `DOKUMENT`.`id`, `Дата`, `Содержание`, `Текущий_статус`, `Правки_и_изменения`, `Тип_Документа`" +
                 " from DOKUMENT join `TIP_DOKUMENTA` on TIP_DOKUMENTA_id = TIP_DOKUMENTA.id" +
-                " where DOKUMENT.id NOT IN (SELECT ID FROM HISTORY);", db.getConnection());
+                " where DOKUMENT.id NOT IN (SELECT DOKUMENT_id FROM HISTORY)", db.getConnection());
 
             db.openConnection();
 
