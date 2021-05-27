@@ -18,7 +18,6 @@ namespace sandbox_databases
     {
         DateTime date1 = DateTime.Now;
         string date = "";
-        internal string categoryUser = "";
 
         public Form_auth()
         {
@@ -91,12 +90,15 @@ namespace sandbox_databases
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
             MySqlDataReader reader;
-
             MySqlDataReader reader1;
+            MySqlDataReader reader2;
 
             MySqlCommand command = new MySqlCommand("select * from `vxod` where login = @uL AND password = @uP", db.getConnection());
             MySqlCommand command_category = new MySqlCommand("select наименование_должности from sotrudnik join dolznost on DOLZNOST_id = dolznost.id join VXOD on SOTRUDNIK_id = SOTRUDNIK.id where login = @uL", db.getConnection());
             MySqlCommand command_name = new MySqlCommand("select имя from `SOTRUDNIK` join VXOD on SOTRUDNIK_id = SOTRUDNIK.id where login = @uL", db.getConnection());
+            MySqlCommand command_podrazdelenie = new MySqlCommand("select PODRAZDELENIE.id from `PODRAZDELENIE` " +
+                "join SOTRUDNIK on PODRAZDELENIE_id = PODRAZDELENIE.id join VXOD on SOTRUDNIK_id = SOTRUDNIK.id " +
+                "where login = @uL;", db.getConnection());
 
             command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox_login.Text;
             command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = textBox_pass.Text;
@@ -104,6 +106,8 @@ namespace sandbox_databases
             command_category.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox_login.Text;
 
             command_name.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox_login.Text;
+
+            command_podrazdelenie.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox_login.Text;
 
             db.openConnection();
 
@@ -113,7 +117,17 @@ namespace sandbox_databases
             reader = command_category.ExecuteReader();
             while (reader.Read())
             {
-                categoryUser = reader["наименование_должности"].ToString();
+                categoryUser.Value = reader["наименование_должности"].ToString();
+            }
+
+            db.closeConnection();
+
+            db.openConnection();
+
+            reader2 = command_podrazdelenie.ExecuteReader();
+            while (reader2.Read())
+            {
+                podrazdelenie.Value = reader2["id"].ToString();
             }
 
             db.closeConnection();
@@ -127,14 +141,14 @@ namespace sandbox_databases
             }
 
 
-            if (table.Rows.Count > 0 && categoryUser == "admin")
+            if (table.Rows.Count > 0 && categoryUser.Value == "admin")
             {
                 this.Hide();
                 MainForm mainForm = new MainForm();
                 mainForm.Show();
             }
             else
-            if (table.Rows.Count > 0 && categoryUser == "rukovoditel")
+            if (table.Rows.Count > 0 && categoryUser.Value == "rukovoditel")
             {
                 this.Hide();
                 RukovosShow RukovosShow = new RukovosShow();
@@ -143,7 +157,7 @@ namespace sandbox_databases
                 
             }
             else
-            if (table.Rows.Count > 0 && categoryUser == "sotrudnik")
+            if (table.Rows.Count > 0 && categoryUser.Value == "sotrudnik")
             {
                 this.Hide();
                 UserMain UserMain = new UserMain();

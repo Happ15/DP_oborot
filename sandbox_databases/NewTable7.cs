@@ -14,24 +14,24 @@ namespace sandbox_databases
 {
     public partial class NewTable7 : Form
     {
+        OpenFileDialog openFileDialog1 = new OpenFileDialog();
         public NewTable7()
         {
             InitializeComponent();
 
-            textBox1.Text = "Имя документа";
+            button1.Click += new EventHandler(button1_Click);
+
+            openFileDialog1.Title = "Выберите файл";
+            openFileDialog1.Filter = "Документ Word (*.docx)|*.docx|Все файлы (*.*)|*.*|PDF (*.pdf)|*.pdf";
+
+            textBox1.Text = "Статус документа";
             textBox1.ForeColor = Color.Gray;
 
-            textBox2.Text = "Пояснение";
+            textBox2.Text = "Правки и изменения";
             textBox2.ForeColor = Color.Gray;
 
-            textBox3.Text = "Задача";
+            textBox3.Text = "Тип документа";
             textBox3.ForeColor = Color.Gray;
-
-            textBox4.Text = "id компании";
-            textBox4.ForeColor = Color.Gray;
-
-            textBox5.Text = "Ссылка";
-            textBox5.ForeColor = Color.Gray;
 
             if(logos.Value == "office")
             {
@@ -46,10 +46,10 @@ namespace sandbox_databases
 
         private void label4_Click(object sender, EventArgs e)
         {
-            if (logos.Value == "office")
+            if (categoryUser.Value == "rukovoditel")
             {
                 this.Hide();
-                UserMain tablemainshow = new UserMain();
+                RukovosShow tablemainshow = new RukovosShow();
                 tablemainshow.Show();
             }
             else
@@ -62,14 +62,24 @@ namespace sandbox_databases
 
         private void registerLabel_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            MainForm MainForm = new MainForm();
-            MainForm.Show();
+            if (categoryUser.Value == "rukovoditel")
+            {
+                this.Hide();
+                RukovosShow tablemainshow = new RukovosShow();
+                tablemainshow.Show();
+            }
+            else
+            {
+                this.Hide();
+                MainForm MainForm = new MainForm();
+                MainForm.Show();
+            }
+            
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
         {
-            if (textBox1.Text == "Имя документа")
+            if (textBox1.Text == "Статус документа")
             {
                 textBox1.Text = "";
                 textBox1.ForeColor = Color.Black;
@@ -80,14 +90,14 @@ namespace sandbox_databases
         {
             if (textBox1.Text == "")
             {
-                textBox1.Text = "Имя документа";
+                textBox1.Text = "Статус документа";
                 textBox1.ForeColor = Color.Gray;
             }
         }
 
         private void textBox2_Enter(object sender, EventArgs e)
         {
-            if (textBox2.Text == "Пояснение")
+            if (textBox2.Text == "Правки и изменения")
             {
                 textBox2.Text = "";
                 textBox2.ForeColor = Color.Black;
@@ -98,14 +108,14 @@ namespace sandbox_databases
         {
             if (textBox2.Text == "")
             {
-                textBox2.Text = "Пояснение";
+                textBox2.Text = "Правки и изменения";
                 textBox2.ForeColor = Color.Gray;
             }
         }
 
         private void textBox3_Enter(object sender, EventArgs e)
         {
-            if (textBox3.Text == "Задача")
+            if (textBox3.Text == "Тип документа")
             {
                 textBox3.Text = "";
                 textBox3.ForeColor = Color.Black;
@@ -116,26 +126,8 @@ namespace sandbox_databases
         {
             if (textBox3.Text == "")
             {
-                textBox3.Text = "Задача";
+                textBox3.Text = "Тип документа";
                 textBox3.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox4_Enter(object sender, EventArgs e)
-        {
-            if (textBox4.Text == "id компании")
-            {
-                textBox4.Text = "";
-                textBox4.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox4_Leave(object sender, EventArgs e)
-        {
-            if (textBox4.Text == "")
-            {
-                textBox4.Text = "id компании";
-                textBox4.ForeColor = Color.Gray;
             }
         }
 
@@ -176,13 +168,13 @@ namespace sandbox_databases
 
         private void buttonRegister_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' ') || textBox3.Text.Contains(' ') || textBox4.Text.Contains(' ') || textBox5.Text.Contains(' '))
+            if (textBox1.Text.Contains(' ') || textBox2.Text.Contains(' ') || textBox3.Text.Contains(' '))
             {
                 MessageBox.Show("Введите корректные значения");
                 return;
             }
             else
-            if (textBox1.Text == "Имя документв" || textBox2.Text == "Пояснение" || textBox3.Text == "Задача" || textBox4.Text == "id компании" || textBox4.Text == "Ссылка")
+            if (textBox1.Text == "Статус документа" || textBox2.Text == "Правки и изменения" || textBox3.Text == "Тип документа")
             {
                 MessageBox.Show("Введите данные");
                 return;
@@ -202,8 +194,6 @@ namespace sandbox_databases
             command1.Parameters.Add("@name", MySqlDbType.VarChar).Value = textBox1.Text;
             command1.Parameters.Add("@zd", MySqlDbType.VarChar).Value = textBox3.Text;
             command1.Parameters.Add("@po", MySqlDbType.VarChar).Value = textBox2.Text;
-            command1.Parameters.Add("@id", MySqlDbType.VarChar).Value = textBox4.Text;
-            command1.Parameters.Add("@ss", MySqlDbType.VarChar).Value = textBox5.Text;
 
             db.openConnection();
 
@@ -226,7 +216,6 @@ namespace sandbox_databases
             MySqlCommand command = new MySqlCommand("select * " +
                 "from company where id = @uL", db.getConnection());
 
-            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = textBox4.Text;
 
             adapter.SelectCommand = command;
             adapter.Fill(table);
@@ -266,56 +255,12 @@ namespace sandbox_databases
                 return false;
         }
 
-        private void textBox5_Enter(object sender, EventArgs e)
-        {
-            if (textBox5.Text == "Ссылка")
-            {
-                textBox5.Text = "";
-                textBox5.ForeColor = Color.Black;
-            }
-        }
-
-        private void textBox5_Leave(object sender, EventArgs e)
-        {
-            if (textBox5.Text == "")
-            {
-                textBox5.Text = "Ссылка";
-                textBox5.ForeColor = Color.Gray;
-            }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            byte[] result = null;
-            FileStream fileStream = File.OpenRead(Directory.GetCurrentDirectory() + @"\Testing\Test.docx");
-            BinaryReader binaryReader = new BinaryReader(fileStream);
-            int count = (int)fileStream.Length;
-            result = binaryReader.ReadBytes(count);
-
-            DB db = new DB();
-
-            DataTable table = new DataTable();
-
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand("INSERT INTO DOKUMENT (`Дата`, `Содержание`, `Текущий_статус`, `TIP_DOKUMENTA_id`) VALUES ('2021-05-20', @Content, 'TEST.docx', '1')", db.getConnection());
-            command.Parameters.AddWithValue("@Content", result);
-
-            db.openConnection();
-
-            int numberOfUpdatedItems = command.ExecuteNonQuery();
-
-            db.closeConnection();
+            // выход, если была нажата кнопка Отмена и прочие (кроме ОК)
+            if (openFileDialog1.ShowDialog() != DialogResult.OK) return;
+            // всё. имя файла теперь хранится в openFileDialog1.FileName
+            MessageBox.Show("Выбран файл: " + openFileDialog1.FileName);
         }
     }
 }

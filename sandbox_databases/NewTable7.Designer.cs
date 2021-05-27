@@ -38,8 +38,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -64,7 +62,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(336, 48);
             this.textBox1.TabIndex = 41;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
@@ -136,9 +133,9 @@
             this.label3.Location = new System.Drawing.Point(335, 58);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(136, 29);
+            this.label3.Size = new System.Drawing.Size(115, 29);
             this.label3.TabIndex = 9;
-            this.label3.Text = "документы ";
+            this.label3.Text = "документ";
             this.label3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NewTable7_MouseDown);
             this.label3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NewTable7_MouseMove);
             // 
@@ -182,32 +179,8 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(336, 48);
             this.textBox3.TabIndex = 43;
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             this.textBox3.Enter += new System.EventHandler(this.textBox3_Enter);
             this.textBox3.Leave += new System.EventHandler(this.textBox3_Leave);
-            // 
-            // textBox4
-            // 
-            this.textBox4.Font = new System.Drawing.Font("Comic Sans MS", 15.75F);
-            this.textBox4.Location = new System.Drawing.Point(12, 219);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(336, 48);
-            this.textBox4.TabIndex = 44;
-            this.textBox4.Enter += new System.EventHandler(this.textBox4_Enter);
-            this.textBox4.Leave += new System.EventHandler(this.textBox4_Leave);
-            // 
-            // textBox5
-            // 
-            this.textBox5.Font = new System.Drawing.Font("Comic Sans MS", 15.75F);
-            this.textBox5.Location = new System.Drawing.Point(12, 273);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-            this.textBox5.Size = new System.Drawing.Size(336, 48);
-            this.textBox5.TabIndex = 45;
-            this.textBox5.Enter += new System.EventHandler(this.textBox5_Enter);
-            this.textBox5.Leave += new System.EventHandler(this.textBox5_Leave);
             // 
             // button1
             // 
@@ -218,7 +191,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(87, 52);
             this.button1.TabIndex = 46;
-            this.button1.Text = "Добавить файл";
+            this.button1.Text = "Выбрать файл";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -228,8 +201,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(798, 450);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
@@ -260,9 +231,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Button button1;
     }
 }

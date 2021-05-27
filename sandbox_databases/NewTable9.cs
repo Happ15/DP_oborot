@@ -13,7 +13,6 @@ namespace sandbox_databases
 {
     public partial class NewTable9 : Form
     {
-        string flagTbl = "";
         public NewTable9()
         {
             InitializeComponent();

@@ -55,4 +55,18 @@ namespace sandbox_databases
         public static int Value { get; set; }
 
     }
+
+    
+
+    static class  podrazdelenie
+    {
+        public static string Value { get; set; }
+
+    }
+    static class categoryUser
+    {
+        public static string Value { get; set; }
+
+    }
+
 }

@@ -56,6 +56,8 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1257, 84);
             this.panel1.TabIndex = 31;
+            this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
             // 
             // label3
             // 
@@ -86,6 +88,8 @@
             this.label2.Size = new System.Drawing.Size(277, 49);
             this.label2.TabIndex = 6;
             this.label2.Text = "Главный экран";
+            this.label2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
+            this.label2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
             // 
             // label7
             // 
@@ -120,6 +124,7 @@
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button5.BackColor = System.Drawing.Color.Moccasin;
             this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button5.Font = new System.Drawing.Font("Candara", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button5.Location = new System.Drawing.Point(507, 549);
@@ -128,7 +133,7 @@
             this.button5.Size = new System.Drawing.Size(365, 54);
             this.button5.TabIndex = 38;
             this.button5.Text = "Определить документ";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // label4

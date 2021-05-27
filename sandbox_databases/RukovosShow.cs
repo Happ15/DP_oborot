@@ -23,7 +23,7 @@ namespace sandbox_databases
         {
             InitializeComponent();
             label5.Text = logos.Value;
-
+            button5.Visible = false;
 
         }
 
@@ -93,6 +93,7 @@ namespace sandbox_databases
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button5.Visible = true;
             FlagTbl = "1";
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -117,6 +118,7 @@ namespace sandbox_databases
 
         private void button2_Click(object sender, EventArgs e)
         {
+            button5.Visible = false;
             FlagTbl = "2";
             ds.Reset();
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -140,6 +142,7 @@ namespace sandbox_databases
 
         private void button4_Click(object sender, EventArgs e)
         {
+            button5.Visible = false;
             FlagTbl = "3";
             ds.Reset();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -224,8 +227,8 @@ namespace sandbox_databases
             id_doc.Value = id;
 
             this.Hide();
-            NewTable9 NewTable = new NewTable9();
-            NewTable.Show();
+            NewTable10_ NewTable10 = new NewTable10_();
+            NewTable10.Show();
 
 
             //flagTbl = "0";
@@ -348,7 +351,6 @@ namespace sandbox_databases
             Process.Start(@"C:\Users\danil\source\repos\sandbox_databases\sandbox_databases\bin\Debug\Testing\" + id + ".docx");
 
         }
-
 
 
     }
