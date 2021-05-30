@@ -42,9 +42,10 @@
             // registerLabel
             // 
             this.registerLabel.AutoSize = true;
+            this.registerLabel.BackColor = System.Drawing.Color.Moccasin;
             this.registerLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.registerLabel.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.registerLabel.Location = new System.Drawing.Point(195, 258);
+            this.registerLabel.Location = new System.Drawing.Point(13, 234);
             this.registerLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.registerLabel.Name = "registerLabel";
             this.registerLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -55,20 +56,21 @@
             // 
             // buttonRegister
             // 
+            this.buttonRegister.BackColor = System.Drawing.Color.Moccasin;
             this.buttonRegister.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonRegister.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttonRegister.Location = new System.Drawing.Point(172, 202);
+            this.buttonRegister.Location = new System.Drawing.Point(344, 221);
             this.buttonRegister.Margin = new System.Windows.Forms.Padding(4);
             this.buttonRegister.Name = "buttonRegister";
             this.buttonRegister.Size = new System.Drawing.Size(233, 52);
             this.buttonRegister.TabIndex = 39;
             this.buttonRegister.Text = "Добавить";
-            this.buttonRegister.UseVisualStyleBackColor = true;
+            this.buttonRegister.UseVisualStyleBackColor = false;
             this.buttonRegister.Click += new System.EventHandler(this.buttonRegister_Click);
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.BackColor = System.Drawing.Color.Sienna;
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
@@ -77,7 +79,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(578, 104);
+            this.panel1.Size = new System.Drawing.Size(590, 104);
             this.panel1.TabIndex = 38;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NewTable8_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NewTable8_MouseMove);
@@ -89,7 +91,7 @@
             this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.ForeColor = System.Drawing.SystemColors.Control;
-            this.label4.Location = new System.Drawing.Point(1, 0);
+            this.label4.Location = new System.Drawing.Point(0, 0);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 38);
@@ -104,7 +106,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Candara", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.ForeColor = System.Drawing.SystemColors.Window;
-            this.label3.Location = new System.Drawing.Point(181, 68);
+            this.label3.Location = new System.Drawing.Point(205, 68);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(170, 29);
@@ -135,7 +137,7 @@
             this.label1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(541, 0);
+            this.label1.Location = new System.Drawing.Point(553, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(37, 36);
@@ -151,7 +153,7 @@
             this.textBox2.Location = new System.Drawing.Point(12, 137);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(554, 48);
+            this.textBox2.Size = new System.Drawing.Size(565, 48);
             this.textBox2.TabIndex = 42;
             this.textBox2.Enter += new System.EventHandler(this.textBox2_Enter);
             this.textBox2.Leave += new System.EventHandler(this.textBox2_Leave);
@@ -160,7 +162,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(578, 314);
+            this.BackColor = System.Drawing.Color.PapayaWhip;
+            this.ClientSize = new System.Drawing.Size(590, 286);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.registerLabel);
             this.Controls.Add(this.buttonRegister);

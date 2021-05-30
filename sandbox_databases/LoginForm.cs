@@ -218,68 +218,6 @@ namespace sandbox_databases
         }
 
 
-        public void time()
-        {
-            string loginUser = textBox_login.Text;
-            
-            DateTime date1 = DateTime.Now;
-            
-            
-            DB db = new DB();
-
-            DataTable table = new DataTable();
-
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand("INSERT INTO session " +
-                "SET `Вход` = @vh," +
-                " users_id = (SELECT id FROM users WHERE `Логин` = @uL), " +
-                " Логин = (SELECT Логин FROM users WHERE `Логин` = @uL)", db.getConnection());
-
-            command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = loginUser;
-            command.Parameters.Add("@vh", MySqlDbType.DateTime).Value = date1;
-            date = date1.ToString();
-
-            date1.ToString(date);
-
-            db.openConnection();
-
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-
-            db.closeConnection();
-
-        }
-
-        public void oftime()
-        {
-            string loginUser = "";
-
-            DateTime date2;
-            date2 = DateTime.Parse(date);
-            DB db = new DB();
-
-            DataTable table = new DataTable();
-
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlDataReader reader;
-
-            MySqlCommand command_category = new MySqlCommand("select `id` from `session` where `Вход` = @uP", db.getConnection());
-
-            command_category.Parameters.Add("@uP", MySqlDbType.DateTime).Value = date2;
-
-            db.openConnection();
-
-            reader = command_category.ExecuteReader();
-
-            while (reader.Read())
-            {
-                loginUser = reader["id"].ToString();
-            }
-            intim.Value = loginUser;
-            db.closeConnection();
-        }
-
+       
     }
 }

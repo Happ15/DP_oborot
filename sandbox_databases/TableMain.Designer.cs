@@ -271,7 +271,7 @@
             // button3
             // 
             this.button3.BackColor = System.Drawing.Color.Moccasin;
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button3.Cursor = System.Windows.Forms.Cursors.Default;
             this.button3.Font = new System.Drawing.Font("Candara", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button3.Location = new System.Drawing.Point(650, 578);
             this.button3.Margin = new System.Windows.Forms.Padding(4);

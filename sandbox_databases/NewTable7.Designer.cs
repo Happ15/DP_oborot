@@ -68,6 +68,7 @@
             // registerLabel
             // 
             this.registerLabel.AutoSize = true;
+            this.registerLabel.BackColor = System.Drawing.Color.Moccasin;
             this.registerLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.registerLabel.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.registerLabel.Location = new System.Drawing.Point(81, 409);
@@ -81,6 +82,7 @@
             // 
             // buttonRegister
             // 
+            this.buttonRegister.BackColor = System.Drawing.Color.Moccasin;
             this.buttonRegister.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonRegister.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonRegister.Location = new System.Drawing.Point(13, 342);
@@ -89,12 +91,12 @@
             this.buttonRegister.Size = new System.Drawing.Size(334, 52);
             this.buttonRegister.TabIndex = 39;
             this.buttonRegister.Text = "Добавить";
-            this.buttonRegister.UseVisualStyleBackColor = true;
+            this.buttonRegister.UseVisualStyleBackColor = false;
             this.buttonRegister.Click += new System.EventHandler(this.buttonRegister_Click);
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.BackColor = System.Drawing.Color.Sienna;
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
@@ -115,7 +117,7 @@
             this.label4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.ForeColor = System.Drawing.SystemColors.Control;
-            this.label4.Location = new System.Drawing.Point(1, 0);
+            this.label4.Location = new System.Drawing.Point(0, 0);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 38);
@@ -184,6 +186,7 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.Moccasin;
             this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Bold);
             this.button1.Location = new System.Drawing.Point(13, 282);
@@ -192,13 +195,14 @@
             this.button1.Size = new System.Drawing.Size(334, 52);
             this.button1.TabIndex = 46;
             this.button1.Text = "Выбрать файл";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // NewTable7
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.PapayaWhip;
             this.ClientSize = new System.Drawing.Size(798, 450);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox3);
